@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Dernek Yazılımı
- * Plugin URI:        https://github.com/lkdtr/dernekyazilimi
+ * Plugin URI:        https://github.com/lkdtr/dernekyazilimi-wordpress
  * Description:       Donation, volunteer and membership forms for associations using the Dernek Yazılımı portal. Forms are drawn by your theme; payment and the rest of the application continue in a frame of the portal.
  * Version:           1.0.0
  * Requires at least: 6.2

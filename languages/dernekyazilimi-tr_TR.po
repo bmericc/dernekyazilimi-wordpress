@@ -255,3 +255,12 @@ msgstr "açık"
 msgid "Donation, volunteer and membership forms for associations using the Dernek Yazılımı portal. Forms are drawn by your theme; payment and the rest of the application continue in a frame of the portal."
 msgstr "Dernek Yazılımı portalını kullanan dernekler için bağış, gönüllü ve üyelik formları. Formları temanız çizer; ödeme ve başvurunun devamı portalın çerçevesinde sürer."
 
+msgid "Secure payment"
+msgstr "Güvenli ödeme"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Close the payment window? If you have not finished paying, your donation will not be completed."
+msgstr "Ödeme penceresi kapatılsın mı? Ödemeyi bitirmediyseniz bağışınız tamamlanmaz."
+

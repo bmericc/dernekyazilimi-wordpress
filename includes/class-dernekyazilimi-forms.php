@@ -67,6 +67,7 @@ class Dernekyazilimi_Forms {
 					'verifyFirst'  => __( 'Please verify your phone number first.', 'dernekyazilimi' ),
 					'sendAgain'    => __( 'Send again', 'dernekyazilimi' ),
 					'existingNote' => __( 'This email already has a portal account. Sign in below to continue.', 'dernekyazilimi' ),
+					'closePayment' => __( 'Close the payment window? If you have not finished paying, your donation will not be completed.', 'dernekyazilimi' ),
 				),
 			)
 		);
@@ -228,7 +229,7 @@ class Dernekyazilimi_Forms {
 			<p class="dy-actions"><button type="submit" class="dy-submit wp-element-button"><?php esc_html_e( 'Donate', 'dernekyazilimi' ); ?></button></p>
 		</form>
 		<?php
-		$this->frame( __( 'Donation', 'dernekyazilimi' ) );
+		$this->frame( __( 'Donation', 'dernekyazilimi' ), true );
 		$this->close();
 
 		return ob_get_clean();
@@ -425,17 +426,29 @@ class Dernekyazilimi_Forms {
 	}
 
 	/**
-	 * Where the portal's page is shown after the form.
+	 * Where the portal's page is shown after the form. With a modal, the card
+	 * payment opens in a dialog over the page and the result returns here.
 	 *
 	 * @param string $title Title of the frame for screen readers.
+	 * @param bool   $modal Whether to add the payment dialog.
 	 */
-	private function frame( $title ) {
+	private function frame( $title, $modal = false ) {
 		?>
 		<div class="dy-frame" hidden>
 			<p class="dy-note" hidden></p>
 			<iframe title="<?php echo esc_attr( $title ); ?>" allow="payment" referrerpolicy="strict-origin-when-cross-origin"></iframe>
 			<p class="dy-hint dy-fallback"><?php esc_html_e( 'Page not showing?', 'dernekyazilimi' ); ?> <a href="#" target="_blank" rel="noopener"><?php esc_html_e( 'Open it in a new tab', 'dernekyazilimi' ); ?></a></p>
 		</div>
-		<?php
+		<?php if ( $modal ) : ?>
+			<?php $label = wp_unique_id( 'dy-modal-' ); ?>
+			<dialog class="dy-modal" aria-labelledby="<?php echo esc_attr( $label ); ?>">
+				<div class="dy-modal-head">
+					<strong id="<?php echo esc_attr( $label ); ?>"><?php esc_html_e( 'Secure payment', 'dernekyazilimi' ); ?></strong>
+					<button type="button" class="dy-modal-close" aria-label="<?php esc_attr_e( 'Close', 'dernekyazilimi' ); ?>">&times;</button>
+				</div>
+				<div class="dy-modal-body"></div>
+			</dialog>
+			<?php
+		endif;
 	}
 }

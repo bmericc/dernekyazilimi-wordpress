@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Dernek Yazılımı 1.0.0\n"
+"Project-Id-Version: Dernek Yazılımı 1.0.1\n"
 "Report-Msgid-Bugs-To: https://github.com/lkdtr/dernekyazilimi-wordpress/issues\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -253,5 +253,14 @@ msgid "open"
 msgstr ""
 
 msgid "Donation, volunteer and membership forms for associations using the Dernek Yazılımı portal. Forms are drawn by your theme; payment and the rest of the application continue in a frame of the portal."
+msgstr ""
+
+msgid "Secure payment"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid "Close the payment window? If you have not finished paying, your donation will not be completed."
 msgstr ""
 

@@ -156,3 +156,70 @@
 	height: 720px;
 	width: 100%;
 }
+
+/* Card payment dialog. */
+html.dy-modal-open {
+	overflow: hidden;
+}
+
+.dernekyazilimi .dy-modal {
+	background: var(--wp--preset--color--base, #fff);
+	border: 0;
+	border-radius: 12px;
+	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+	color: var(--wp--preset--color--contrast, #111);
+	max-height: calc(100dvh - 2rem);
+	max-width: calc(100vw - 2rem);
+	overflow: hidden;
+	padding: 0;
+	width: 34rem;
+}
+
+.dernekyazilimi .dy-modal[open] {
+	display: flex;
+	flex-direction: column;
+}
+
+.dernekyazilimi .dy-modal::backdrop {
+	background: rgba(0, 0, 0, 0.6);
+}
+
+.dernekyazilimi .dy-modal-head {
+	align-items: center;
+	border-bottom: 1px solid var(--dy-border);
+	display: flex;
+	flex: none;
+	gap: 1rem;
+	justify-content: space-between;
+	padding: 0.75rem 1rem;
+}
+
+.dernekyazilimi .dy-modal-close {
+	background: transparent;
+	border: 0;
+	color: inherit;
+	font-size: 1.75rem;
+	line-height: 1;
+	padding: 0 0.25rem;
+}
+
+.dernekyazilimi .dy-modal-body {
+	flex: 1 1 auto;
+	overflow: auto;
+	-webkit-overflow-scrolling: touch;
+	padding: 0.5rem 0.75rem 0.75rem;
+}
+
+.dernekyazilimi .dy-modal-body .dy-frame iframe {
+	height: min(720px, calc(100dvh - 10rem));
+}
+
+@media (max-width: 600px) {
+	.dernekyazilimi .dy-modal {
+		border-radius: 0;
+		height: 100dvh;
+		max-height: 100dvh;
+		max-width: 100vw;
+		width: 100vw;
+	}
+}

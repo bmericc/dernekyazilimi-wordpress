@@ -130,15 +130,72 @@
 			button.disabled = on;
 		}
 
+		var modal = root.querySelector( '.dy-modal' );
+		var framePlace = frameBox ? document.createComment( 'dy-frame' ) : null;
+		var resultUrl = '';
+		var reachedPortal = false;
+
 		function showFrame( url, note ) {
 			var noteBox = frameBox.querySelector( '.dy-note' );
 			noteBox.textContent = note || '';
 			noteBox.hidden = ! note;
 			frameBox.querySelector( '.dy-fallback a' ).href = url;
+			frame.style.height = '';
 			frame.src = url;
 			form.hidden = true;
 			frameBox.hidden = false;
 			root.scrollIntoView( { block: 'start', behavior: 'smooth' } );
+		}
+
+		function showForm() {
+			frame.src = 'about:blank';
+			frameBox.hidden = true;
+			form.hidden = false;
+		}
+
+		// Card payment: the provider's page opens in a dialog over the page.
+		function showPayment( url, result ) {
+			if ( ! modal || typeof modal.showModal !== 'function' ) {
+				showFrame( url );
+				return;
+			}
+			resultUrl = result || '';
+			reachedPortal = false;
+			frameBox.parentNode.insertBefore( framePlace, frameBox );
+			modal.querySelector( '.dy-modal-body' ).appendChild( frameBox );
+			frameBox.querySelector( '.dy-fallback a' ).href = url;
+			frame.style.height = '';
+			frame.src = url;
+			frameBox.hidden = false;
+			document.documentElement.classList.add( 'dy-modal-open' );
+			modal.showModal();
+		}
+
+		function closePayment() {
+			if ( ! reachedPortal && ! window.confirm( i18n.closePayment ) ) {
+				return;
+			}
+			modal.close();
+		}
+
+		if ( modal ) {
+			modal.querySelector( '.dy-modal-close' ).addEventListener( 'click', closePayment );
+			// Escape asks first, like the close button.
+			modal.addEventListener( 'cancel', function ( event ) {
+				event.preventDefault();
+				closePayment();
+			} );
+			modal.addEventListener( 'close', function () {
+				document.documentElement.classList.remove( 'dy-modal-open' );
+				framePlace.parentNode.replaceChild( frameBox, framePlace );
+				// After the payment the result stays on the page; a payment
+				// left unfinished brings the form back.
+				if ( reachedPortal && resultUrl ) {
+					showFrame( resultUrl );
+				} else {
+					showForm();
+				}
+			} );
 		}
 
 		// The portal's pages report their height and may ask for the form again.
@@ -147,12 +204,16 @@
 				return;
 			}
 			if ( event.data.type === 'dernekyazilimi:height' && event.data.height > 0 ) {
+				reachedPortal = true;
 				frame.style.height = Math.min( Math.ceil( event.data.height ) + 8, 20000 ) + 'px';
 			}
 			if ( event.data.type === 'dernekyazilimi:restart' ) {
-				frame.src = 'about:blank';
-				frameBox.hidden = true;
-				form.hidden = false;
+				reachedPortal = false;
+				if ( modal && modal.open ) {
+					modal.close();
+				} else {
+					showForm();
+				}
 			}
 		} );
 
@@ -257,7 +318,9 @@
 					showErrors( result.body );
 					return;
 				}
-				if ( result.body.frame_url ) {
+				if ( result.body.frame_url && result.body.method === 'card' ) {
+					showPayment( result.body.frame_url, result.body.result_url );
+				} else if ( result.body.frame_url ) {
 					showFrame( result.body.frame_url );
 				} else if ( result.body.continue_url ) {
 					showFrame( result.body.continue_url, result.body.created === false ? i18n.existingNote : '' );

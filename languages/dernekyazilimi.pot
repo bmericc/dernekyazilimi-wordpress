@@ -1,0 +1,257 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Dernek Yazılımı 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/lkdtr/dernekyazilimi/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Domain: dernekyazilimi\n"
+
+msgid "Settings"
+msgstr ""
+
+msgid "The portal address and the API key are not set yet."
+msgstr ""
+
+msgid "The portal did not answer as expected."
+msgstr ""
+
+msgid "The portal could not be reached. Please try again in a moment."
+msgstr ""
+
+msgid "Sending…"
+msgstr ""
+
+msgid "The form could not be sent. Please check your connection and try again."
+msgstr ""
+
+msgid "Please fill in this field."
+msgstr ""
+
+msgid "We sent a code by SMS. Enter it below."
+msgstr ""
+
+msgid "Enter the 6-digit code."
+msgstr ""
+
+msgid "Your phone number is verified."
+msgstr ""
+
+msgid "Please verify your phone number first."
+msgstr ""
+
+msgid "Send again"
+msgstr ""
+
+msgid "This email already has a portal account. Sign in below to continue."
+msgstr ""
+
+msgid "Donation form"
+msgstr ""
+
+msgid "Donation form of your association's portal."
+msgstr ""
+
+msgid "Volunteer form"
+msgstr ""
+
+msgid "Volunteer registration form of your association's portal."
+msgstr ""
+
+msgid "Membership application"
+msgstr ""
+
+msgid "Membership application of your association's portal."
+msgstr ""
+
+msgid "Form settings"
+msgstr ""
+
+msgid "Donation cause number (optional)"
+msgstr ""
+
+msgid "Amount filled in at first (optional)"
+msgstr ""
+
+msgid "Online donations are not accepted at the moment."
+msgstr ""
+
+msgid "Amount (TL)"
+msgstr ""
+
+msgid "Donation cause"
+msgstr ""
+
+msgid "General donation"
+msgstr ""
+
+msgid "Full name"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "Your message (optional)"
+msgstr ""
+
+msgid "I do not want my name to be mentioned as a donor"
+msgstr ""
+
+msgid "Payment method"
+msgstr ""
+
+msgid "Your card details are entered on the secure page of the payment provider, not on this site."
+msgstr ""
+
+msgid "Donate"
+msgstr ""
+
+msgid "Donation"
+msgstr ""
+
+msgid "Volunteer registration is closed at the moment."
+msgstr ""
+
+msgid "Register"
+msgstr ""
+
+msgid "Membership applications are closed at the moment."
+msgstr ""
+
+msgid "Continue to the application"
+msgstr ""
+
+msgid "First we open your portal account; the application form follows right after. If you already have an account, enter its email and you will be asked to sign in."
+msgstr ""
+
+msgid "First name"
+msgstr ""
+
+msgid "Last name"
+msgstr ""
+
+msgid "Mobile phone"
+msgstr ""
+
+msgid "Send code"
+msgstr ""
+
+msgid "We verify your number with a code sent by SMS."
+msgstr ""
+
+msgid "Verification code"
+msgstr ""
+
+msgid "Verify"
+msgstr ""
+
+msgid "Communication permissions"
+msgstr ""
+
+msgid "Your registration is complete. Thank you!"
+msgstr ""
+
+msgid "We sent you an email with a link to set your password for the portal."
+msgstr ""
+
+msgid "This module is off in the portal."
+msgstr ""
+
+msgid "privacy policy"
+msgstr ""
+
+msgid "I have read and accept: %s"
+msgstr ""
+
+msgid "Page not showing?"
+msgstr ""
+
+msgid "Open it in a new tab"
+msgstr ""
+
+msgid "The form could not be sent."
+msgstr ""
+
+msgid "Too many requests. Please wait a minute and try again."
+msgstr ""
+
+msgid "This form is not set up yet."
+msgstr ""
+
+msgid "The form cannot be sent right now. Please try again later."
+msgstr ""
+
+msgid "Dernek Yazılımı"
+msgstr ""
+
+msgid "Portal connection"
+msgstr ""
+
+msgid "Portal address"
+msgstr ""
+
+msgid "API key"
+msgstr ""
+
+msgid "The portal address must start with https://."
+msgstr ""
+
+msgid "Set in wp-config.php."
+msgstr ""
+
+msgid "Address of your association's Dernek Yazılımı portal."
+msgstr ""
+
+msgid "Saved — leave empty to keep it"
+msgstr ""
+
+msgid "Made in the portal: Admin panel → Settings → Organization settings → Web site connection. This site's address must also be listed there under the sites allowed to embed pages."
+msgstr ""
+
+msgid "Remove the saved key"
+msgstr ""
+
+msgid "Connection status"
+msgstr ""
+
+msgid "Forms"
+msgstr ""
+
+msgid "Add a form to any page with its block (search for “Dernek Yazılımı” in the block inserter) or its shortcode:"
+msgstr ""
+
+msgid "Donation form. Optional: cause=\"3\" amount=\"250\"."
+msgstr ""
+
+msgid "Volunteer registration form."
+msgstr ""
+
+msgid "Membership application: opens the account here, the application continues in a frame."
+msgstr ""
+
+msgid "Enter the portal address and the API key first."
+msgstr ""
+
+msgid "Connected to the portal of %s."
+msgstr ""
+
+msgid "Volunteer registration"
+msgstr ""
+
+msgid "module is off in the portal"
+msgstr ""
+
+msgid "closed in the portal"
+msgstr ""
+
+msgid "open"
+msgstr ""
+
+msgid "Donation, volunteer and membership forms for associations using the Dernek Yazılımı portal. Forms are drawn by your theme; payment and the rest of the application continue in a frame of the portal."
+msgstr ""
+

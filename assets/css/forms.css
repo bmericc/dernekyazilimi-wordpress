@@ -1,0 +1,158 @@
+/* Dernek Yazılımı forms. Typography, colours and button shapes come from the
+   theme; these rules only lay the fields out. */
+.dernekyazilimi {
+	--dy-accent: var(--wp--preset--color--primary, currentColor);
+	--dy-border: color-mix(in srgb, currentColor 25%, transparent);
+	--dy-danger: #c0392b;
+	--dy-good: #1e7e34;
+	--dy-gap: 1rem;
+	container-type: inline-size;
+}
+
+.dernekyazilimi [hidden] {
+	display: none !important;
+}
+
+.dernekyazilimi .dy-form {
+	display: grid;
+	gap: var(--dy-gap);
+}
+
+.dernekyazilimi .dy-row {
+	display: grid;
+	gap: var(--dy-gap);
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+}
+
+.dernekyazilimi .dy-field,
+.dernekyazilimi fieldset.dy-field {
+	border: 0;
+	margin: 0;
+	min-width: 0;
+	padding: 0;
+}
+
+.dernekyazilimi .dy-field > label,
+.dernekyazilimi .dy-field > legend {
+	display: block;
+	font-weight: 600;
+	margin-bottom: 0.35em;
+	padding: 0;
+}
+
+.dernekyazilimi input:not([type="checkbox"]):not([type="radio"]),
+.dernekyazilimi select,
+.dernekyazilimi textarea {
+	background: transparent;
+	border: 1px solid var(--dy-border);
+	border-radius: var(--wp--custom--border--radius, 4px);
+	box-sizing: border-box;
+	color: inherit;
+	font: inherit;
+	max-width: 100%;
+	padding: 0.6em 0.75em;
+	width: 100%;
+}
+
+.dernekyazilimi input:focus-visible,
+.dernekyazilimi select:focus-visible,
+.dernekyazilimi textarea:focus-visible {
+	border-color: var(--dy-accent);
+	outline: 2px solid var(--dy-accent);
+	outline-offset: 1px;
+}
+
+.dernekyazilimi .dy-inline {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.dernekyazilimi .dy-inline input {
+	flex: 1 1 10rem;
+	width: auto;
+}
+
+.dernekyazilimi .dy-amounts {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.dernekyazilimi button {
+	cursor: pointer;
+	font: inherit;
+}
+
+.dernekyazilimi button.is-style-outline {
+	background: transparent;
+	border: 1px solid currentColor;
+	color: inherit;
+}
+
+.dernekyazilimi button[disabled] {
+	cursor: progress;
+	opacity: 0.6;
+}
+
+.dernekyazilimi .dy-check {
+	align-items: flex-start;
+	display: flex;
+	font-weight: 400;
+	gap: 0.5em;
+	margin: 0.25em 0;
+}
+
+.dernekyazilimi .dy-check input {
+	flex: none;
+	margin-top: 0.3em;
+}
+
+.dernekyazilimi .dy-hint {
+	font-size: 0.875em;
+	margin: 0.35em 0 0;
+	opacity: 0.75;
+}
+
+.dernekyazilimi .dy-required,
+.dernekyazilimi .dy-error,
+.dernekyazilimi .dy-message {
+	color: var(--dy-danger);
+}
+
+.dernekyazilimi .dy-error {
+	font-size: 0.875em;
+	margin: 0.35em 0 0;
+}
+
+.dernekyazilimi .dy-invalid input:not([type="checkbox"]):not([type="radio"]),
+.dernekyazilimi .dy-invalid select {
+	border-color: var(--dy-danger);
+}
+
+.dernekyazilimi .dy-good {
+	color: var(--dy-good);
+	opacity: 1;
+}
+
+.dernekyazilimi .dy-message,
+.dernekyazilimi .dy-actions {
+	margin: 0;
+}
+
+.dernekyazilimi .dy-hp {
+	height: 1px;
+	left: -9999px;
+	overflow: hidden;
+	position: absolute;
+	width: 1px;
+}
+
+.dernekyazilimi .dy-frame iframe {
+	background: transparent;
+	border: 0;
+	display: block;
+	height: 720px;
+	width: 100%;
+}

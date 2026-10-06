@@ -1,0 +1,257 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Dernek Yazılımı 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/lkdtr/dernekyazilimi/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: tr_TR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: dernekyazilimi\n"
+
+msgid "Settings"
+msgstr "Ayarlar"
+
+msgid "The portal address and the API key are not set yet."
+msgstr "Portal adresi ve API anahtarı henüz girilmedi."
+
+msgid "The portal did not answer as expected."
+msgstr "Portal beklenen yanıtı vermedi."
+
+msgid "The portal could not be reached. Please try again in a moment."
+msgstr "Portala ulaşılamadı. Lütfen biraz sonra tekrar deneyin."
+
+msgid "Sending…"
+msgstr "Gönderiliyor…"
+
+msgid "The form could not be sent. Please check your connection and try again."
+msgstr "Form gönderilemedi. Lütfen bağlantınızı kontrol edip tekrar deneyin."
+
+msgid "Please fill in this field."
+msgstr "Lütfen bu alanı doldurun."
+
+msgid "We sent a code by SMS. Enter it below."
+msgstr "SMS ile bir kod gönderdik. Aşağıya yazın."
+
+msgid "Enter the 6-digit code."
+msgstr "6 haneli kodu yazın."
+
+msgid "Your phone number is verified."
+msgstr "Telefon numaranız doğrulandı."
+
+msgid "Please verify your phone number first."
+msgstr "Lütfen önce telefon numaranızı doğrulayın."
+
+msgid "Send again"
+msgstr "Yeniden gönder"
+
+msgid "This email already has a portal account. Sign in below to continue."
+msgstr "Bu e-posta adresiyle açılmış bir portal hesabı var. Devam etmek için aşağıdan giriş yapın."
+
+msgid "Donation form"
+msgstr "Bağış formu"
+
+msgid "Donation form of your association's portal."
+msgstr "Derneğinizin portalının bağış formu."
+
+msgid "Volunteer form"
+msgstr "Gönüllü formu"
+
+msgid "Volunteer registration form of your association's portal."
+msgstr "Derneğinizin portalının gönüllü kayıt formu."
+
+msgid "Membership application"
+msgstr "Üyelik başvurusu"
+
+msgid "Membership application of your association's portal."
+msgstr "Derneğinizin portalının üyelik başvurusu."
+
+msgid "Form settings"
+msgstr "Form ayarları"
+
+msgid "Donation cause number (optional)"
+msgstr "Bağış amacı numarası (isteğe bağlı)"
+
+msgid "Amount filled in at first (optional)"
+msgstr "Başlangıçta yazılı tutar (isteğe bağlı)"
+
+msgid "Online donations are not accepted at the moment."
+msgstr "Şu anda çevrim içi bağış alınmıyor."
+
+msgid "Amount (TL)"
+msgstr "Tutar (TL)"
+
+msgid "Donation cause"
+msgstr "Bağış amacı"
+
+msgid "General donation"
+msgstr "Genel bağış"
+
+msgid "Full name"
+msgstr "Ad soyad"
+
+msgid "Email"
+msgstr "E-posta"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Your message (optional)"
+msgstr "Mesajınız (isteğe bağlı)"
+
+msgid "I do not want my name to be mentioned as a donor"
+msgstr "Adımın bağışçı olarak anılmasını istemiyorum"
+
+msgid "Payment method"
+msgstr "Ödeme yöntemi"
+
+msgid "Your card details are entered on the secure page of the payment provider, not on this site."
+msgstr "Kart bilgileriniz bu sitede değil, ödeme kuruluşunun güvenli sayfasında girilir."
+
+msgid "Donate"
+msgstr "Bağış yap"
+
+msgid "Donation"
+msgstr "Bağış"
+
+msgid "Volunteer registration is closed at the moment."
+msgstr "Gönüllü kaydı şu anda kapalı."
+
+msgid "Register"
+msgstr "Kayıt ol"
+
+msgid "Membership applications are closed at the moment."
+msgstr "Üyelik başvuruları şu anda kapalı."
+
+msgid "Continue to the application"
+msgstr "Başvuruya devam et"
+
+msgid "First we open your portal account; the application form follows right after. If you already have an account, enter its email and you will be asked to sign in."
+msgstr "Önce portal hesabınızı açıyoruz; başvuru formu hemen ardından gelir. Zaten hesabınız varsa e-postasını yazın, giriş yapmanız istenir."
+
+msgid "First name"
+msgstr "Ad"
+
+msgid "Last name"
+msgstr "Soyad"
+
+msgid "Mobile phone"
+msgstr "Cep telefonu"
+
+msgid "Send code"
+msgstr "Kod gönder"
+
+msgid "We verify your number with a code sent by SMS."
+msgstr "Numaranızı SMS ile gönderilen bir kodla doğruluyoruz."
+
+msgid "Verification code"
+msgstr "Doğrulama kodu"
+
+msgid "Verify"
+msgstr "Doğrula"
+
+msgid "Communication permissions"
+msgstr "İletişim izinleri"
+
+msgid "Your registration is complete. Thank you!"
+msgstr "Kaydınız tamamlandı. Teşekkür ederiz!"
+
+msgid "We sent you an email with a link to set your password for the portal."
+msgstr "Portal parolanızı belirlemeniz için bağlantı içeren bir e-posta gönderdik."
+
+msgid "This module is off in the portal."
+msgstr "Bu modül portalda kapalı."
+
+msgid "privacy policy"
+msgstr "gizlilik politikası"
+
+msgid "I have read and accept: %s"
+msgstr "Okudum ve kabul ediyorum: %s"
+
+msgid "Page not showing?"
+msgstr "Sayfa görünmüyor mu?"
+
+msgid "Open it in a new tab"
+msgstr "Yeni sekmede açın"
+
+msgid "The form could not be sent."
+msgstr "Form gönderilemedi."
+
+msgid "Too many requests. Please wait a minute and try again."
+msgstr "Çok fazla istek. Lütfen bir dakika bekleyip tekrar deneyin."
+
+msgid "This form is not set up yet."
+msgstr "Bu form henüz kurulmadı."
+
+msgid "The form cannot be sent right now. Please try again later."
+msgstr "Form şu anda gönderilemiyor. Lütfen daha sonra tekrar deneyin."
+
+msgid "Dernek Yazılımı"
+msgstr "Dernek Yazılımı"
+
+msgid "Portal connection"
+msgstr "Portal bağlantısı"
+
+msgid "Portal address"
+msgstr "Portal adresi"
+
+msgid "API key"
+msgstr "API anahtarı"
+
+msgid "The portal address must start with https://."
+msgstr "Portal adresi https:// ile başlamalı."
+
+msgid "Set in wp-config.php."
+msgstr "wp-config.php içinde tanımlı."
+
+msgid "Address of your association's Dernek Yazılımı portal."
+msgstr "Derneğinizin Dernek Yazılımı portalının adresi."
+
+msgid "Saved — leave empty to keep it"
+msgstr "Kayıtlı — değiştirmemek için boş bırakın"
+
+msgid "Made in the portal: Admin panel → Settings → Organization settings → Web site connection. This site's address must also be listed there under the sites allowed to embed pages."
+msgstr "Portalda üretilir: Yönetim paneli → Ayarlar → Kurum ayarları → Web sitesi bağlantısı. Bu sitenin adresi de orada “Gömülebilecek siteler” listesinde olmalıdır."
+
+msgid "Remove the saved key"
+msgstr "Kayıtlı anahtarı sil"
+
+msgid "Connection status"
+msgstr "Bağlantı durumu"
+
+msgid "Forms"
+msgstr "Formlar"
+
+msgid "Add a form to any page with its block (search for “Dernek Yazılımı” in the block inserter) or its shortcode:"
+msgstr "Bir formu herhangi bir sayfaya bloğuyla (blok ekleyicide “Dernek Yazılımı” diye arayın) ya da kısa koduyla ekleyin:"
+
+msgid "Donation form. Optional: cause=\"3\" amount=\"250\"."
+msgstr "Bağış formu. İsteğe bağlı: cause=\"3\" amount=\"250\"."
+
+msgid "Volunteer registration form."
+msgstr "Gönüllü kayıt formu."
+
+msgid "Membership application: opens the account here, the application continues in a frame."
+msgstr "Üyelik başvurusu: hesap burada açılır, başvuru çerçeve içinde sürer."
+
+msgid "Enter the portal address and the API key first."
+msgstr "Önce portal adresini ve API anahtarını girin."
+
+msgid "Connected to the portal of %s."
+msgstr "%s portalına bağlanıldı."
+
+msgid "Volunteer registration"
+msgstr "Gönüllü kaydı"
+
+msgid "module is off in the portal"
+msgstr "modül portalda kapalı"
+
+msgid "closed in the portal"
+msgstr "portalda kapalı"
+
+msgid "open"
+msgstr "açık"
+
+msgid "Donation, volunteer and membership forms for associations using the Dernek Yazılımı portal. Forms are drawn by your theme; payment and the rest of the application continue in a frame of the portal."
+msgstr "Dernek Yazılımı portalını kullanan dernekler için bağış, gönüllü ve üyelik formları. Formları temanız çizer; ödeme ve başvurunun devamı portalın çerçevesinde sürer."
+

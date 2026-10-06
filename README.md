@@ -9,3 +9,4 @@
 - Portal tarafı: `/api/site/*` (portal reposunda `App\Support\SiteApi`).
 - Paket: `git archive --format=zip --prefix=dernekyazilimi/ -o dernekyazilimi.zip HEAD` (`.gitattributes` dağıtıma girmeyenleri ayıklar).
 - WordPress.org'a göndermeden önce [Plugin Check](https://wordpress.org/plugins/plugin-check/) ile denetleyin.
+# dernekyazilimi-wordpress

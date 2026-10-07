@@ -176,6 +176,13 @@ class Dernekyazilimi_Forms {
 			<?php $this->honeypot(); ?>
 			<div class="dy-field" data-dy-field="amount">
 				<label for="<?php echo esc_attr( $id ); ?>-amount"><?php esc_html_e( 'Amount (TL)', 'dernekyazilimi' ); ?> <span class="dy-required" aria-hidden="true">*</span></label>
+				<?php if ( ! empty( $donation['fixed_only'] ) && ! empty( $donation['amounts'] ) ) : ?>
+					<div class="dy-amounts">
+						<?php foreach ( (array) $donation['amounts'] as $fixed ) : ?>
+							<label class="dy-check"><input type="radio" name="amount" value="<?php echo esc_attr( (int) $fixed ); ?>" <?php checked( (float) $amount, (float) $fixed ); ?> required> <span><?php echo esc_html( number_format_i18n( (int) $fixed ) ); ?> TL</span></label>
+						<?php endforeach; ?>
+					</div>
+				<?php else : ?>
 				<?php if ( ! empty( $donation['amounts'] ) ) : ?>
 					<div class="dy-amounts">
 						<?php foreach ( (array) $donation['amounts'] as $suggested ) : ?>
@@ -184,6 +191,7 @@ class Dernekyazilimi_Forms {
 					</div>
 				<?php endif; ?>
 				<input type="number" inputmode="decimal" id="<?php echo esc_attr( $id ); ?>-amount" name="amount" min="<?php echo esc_attr( (int) ( $donation['minimum'] ?? 1 ) ); ?>" step="0.01" value="<?php echo esc_attr( $amount ); ?>" required>
+				<?php endif; ?>
 			</div>
 
 			<?php if ( ! empty( $donation['causes'] ) ) : ?>

@@ -179,7 +179,7 @@ class Dernekyazilimi_Forms {
 				<?php if ( ! empty( $donation['fixed_only'] ) && ! empty( $donation['amounts'] ) ) : ?>
 					<div class="dy-amounts">
 						<?php foreach ( (array) $donation['amounts'] as $fixed ) : ?>
-							<label class="dy-check"><input type="radio" name="amount" value="<?php echo esc_attr( (int) $fixed ); ?>" <?php checked( (float) $amount, (float) $fixed ); ?> required> <span><?php echo esc_html( number_format_i18n( (int) $fixed ) ); ?> TL</span></label>
+							<label class="dy-amount-choice"><input type="radio" name="amount" value="<?php echo esc_attr( (int) $fixed ); ?>" <?php checked( (float) $amount, (float) $fixed ); ?> required><span class="dy-amount wp-element-button is-style-outline"><?php echo esc_html( number_format_i18n( (int) $fixed ) ); ?> TL</span></label>
 						<?php endforeach; ?>
 					</div>
 				<?php else : ?>

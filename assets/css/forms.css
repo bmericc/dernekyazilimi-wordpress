@@ -85,10 +85,43 @@
 	font: inherit;
 }
 
-.dernekyazilimi button.is-style-outline {
+.dernekyazilimi button.is-style-outline,
+.dernekyazilimi .dy-amount-choice input:not(:checked) + .dy-amount {
 	background: transparent;
 	border: 1px solid currentColor;
 	color: inherit;
+}
+
+/* Fixed amounts: radios drawn as the amount buttons. */
+.dernekyazilimi .dy-amount-choice {
+	cursor: pointer;
+	font-weight: inherit;
+	margin: 0;
+	position: relative;
+}
+
+.dernekyazilimi .dy-amount-choice input {
+	height: 100%;
+	left: 0;
+	margin: 0;
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.dernekyazilimi .dy-amount-choice .dy-amount {
+	display: inline-block;
+}
+
+.dernekyazilimi .dy-amount-choice input:checked + .dy-amount {
+	border: 1px solid transparent;
+	box-shadow: 0 0 0 2px var(--dy-accent);
+}
+
+.dernekyazilimi .dy-amount-choice input:focus-visible + .dy-amount {
+	outline: 2px solid var(--dy-accent);
+	outline-offset: 2px;
 }
 
 .dernekyazilimi button[disabled] {

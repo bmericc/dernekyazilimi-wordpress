@@ -14,6 +14,7 @@ class Dernekyazilimi_Client {
 
 	const OPTION      = 'dernekyazilimi_settings';
 	const CONFIG_KEY  = 'dernekyazilimi_config';
+	const TEXTS_KEY   = 'dernekyazilimi_agreements';
 	const CONFIG_TIME = 5 * MINUTE_IN_SECONDS;
 
 	/**
@@ -99,6 +100,41 @@ class Dernekyazilimi_Client {
 	 */
 	public function forget_config() {
 		delete_transient( self::CONFIG_KEY );
+		delete_transient( self::TEXTS_KEY );
+	}
+
+	/**
+	 * Text of an agreement in force in the portal; cached for a few minutes.
+	 *
+	 * @param string $key Key of the agreement, e.g. "payment-terms".
+	 * @return array|WP_Error Title, version, content (HTML) and address.
+	 */
+	public function agreement( $key ) {
+		if ( ! $this->configured() ) {
+			return new WP_Error( 'dernekyazilimi_not_configured', __( 'The portal address and the API key are not set yet.', 'dernekyazilimi' ) );
+		}
+
+		$cached = get_transient( self::TEXTS_KEY );
+		$cached = is_array( $cached ) ? $cached : array();
+		if ( isset( $cached[ $key ] ) ) {
+			return $cached[ $key ];
+		}
+
+		$response = $this->request( 'GET', 'agreements/' . rawurlencode( $key ) );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+		if ( 404 === $response['status'] ) {
+			return new WP_Error( 'dernekyazilimi_no_agreement', __( 'The portal has no published agreement with this key.', 'dernekyazilimi' ) );
+		}
+		if ( 200 !== $response['status'] || ! isset( $response['body']['content'] ) ) {
+			return new WP_Error( 'dernekyazilimi_portal_error', $response['body']['message'] ?? __( 'The portal did not answer as expected.', 'dernekyazilimi' ), array( 'status' => $response['status'] ) );
+		}
+
+		$cached[ $key ] = $response['body'];
+		set_transient( self::TEXTS_KEY, $cached, self::CONFIG_TIME );
+
+		return $response['body'];
 	}
 
 	/**

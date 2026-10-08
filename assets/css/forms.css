@@ -273,3 +273,18 @@ html.dy-modal-open {
 		width: 100vw;
 	}
 }
+
+/* Logos of the card payment providers */
+.dernekyazilimi .dy-logos {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75em;
+	margin: 0.75em 0 0;
+}
+
+.dernekyazilimi .dy-logos img {
+	height: 28px;
+	width: auto;
+	max-width: 100%;
+}

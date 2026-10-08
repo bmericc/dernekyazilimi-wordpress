@@ -143,6 +143,8 @@
 					}
 					event.preventDefault();
 					docFrame.src = link.href;
+					docModal.querySelector( '.dy-modal-head strong' ).textContent = link.textContent;
+					docModal.querySelector( '.dy-fallback a' ).href = link.href;
 					document.documentElement.classList.add( 'dy-modal-open' );
 					docModal.showModal();
 				} );

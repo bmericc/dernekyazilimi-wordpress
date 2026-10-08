@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Donation, volunteer and membership forms.
+ * Donation, volunteer and membership forms; agreement texts and payment logos.
  */
 class Dernekyazilimi_Forms {
 
@@ -75,6 +75,8 @@ class Dernekyazilimi_Forms {
 		add_shortcode( 'dernekyazilimi_donate', array( $this, 'donate' ) );
 		add_shortcode( 'dernekyazilimi_volunteer', array( $this, 'volunteer' ) );
 		add_shortcode( 'dernekyazilimi_membership', array( $this, 'membership' ) );
+		add_shortcode( 'dernekyazilimi_agreement', array( $this, 'agreement' ) );
+		add_shortcode( 'dernekyazilimi_payment_logos', array( $this, 'payment_logos' ) );
 
 		$this->blocks();
 	}
@@ -229,9 +231,17 @@ class Dernekyazilimi_Forms {
 					<label class="dy-check"><input type="radio" name="method" value="<?php echo esc_attr( $method['key'] ); ?>" <?php checked( 0, $index ); ?> required> <span><?php echo esc_html( $method['label'] ); ?></span></label>
 				<?php endforeach; ?>
 				<p class="dy-hint"><?php esc_html_e( 'Your card details are entered on the secure page of the payment provider, not on this site.', 'dernekyazilimi' ); ?></p>
+				<?php $this->logos( $config ); ?>
 			</fieldset>
 
-			<?php $this->privacy( $config ); ?>
+			<?php
+			$this->agreements(
+				array(
+					'agreement'     => $config['privacy'] ?? null,
+					'payment_terms' => $config['payment']['terms'] ?? null,
+				)
+			);
+			?>
 
 			<p class="dy-message" role="alert" hidden></p>
 			<p class="dy-actions"><button type="submit" class="dy-submit wp-element-button"><?php esc_html_e( 'Donate', 'dernekyazilimi' ); ?></button></p>
@@ -325,7 +335,7 @@ class Dernekyazilimi_Forms {
 				</fieldset>
 			<?php endif; ?>
 
-			<?php $this->privacy( $config ); ?>
+			<?php $this->agreements( array( 'agreement' => $config['privacy'] ?? null ) ); ?>
 
 			<p class="dy-message" role="alert" hidden></p>
 			<p class="dy-actions"><button type="submit" class="dy-submit wp-element-button"><?php echo esc_html( $submit ); ?></button></p>
@@ -411,32 +421,124 @@ class Dernekyazilimi_Forms {
 	}
 
 	/**
-	 * The privacy policy checkbox, while the portal has a policy in force.
+	 * [dernekyazilimi_agreement key="payment-terms"]
+	 *
+	 * Text of an agreement published in the portal, so that it is kept in
+	 * one place and still has a page on this site.
+	 *
+	 * @param array|string $atts Attributes.
+	 * @return string
+	 */
+	public function agreement( $atts ) {
+		$atts = shortcode_atts(
+			array(
+				'key'   => 'payment-terms',
+				'title' => '',
+			),
+			is_array( $atts ) ? $atts : array(),
+			'dernekyazilimi_agreement'
+		);
+		$key  = sanitize_title( $atts['key'] );
+		$text = $this->client->agreement( $key );
+
+		if ( is_wp_error( $text ) ) {
+			// Visitors see nothing broken; people who can fix it see why.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return '';
+			}
+
+			return '<p class="dernekyazilimi-notice"><strong>Dernek Yazılımı:</strong> ' . esc_html( $text->get_error_message() ) . ' (' . esc_html( $key ) . ')</p>';
+		}
+
+		$html = '<div class="dernekyazilimi dy-agreement">';
+		if ( rest_sanitize_boolean( $atts['title'] ) && ! empty( $text['title'] ) ) {
+			$html .= '<h2>' . esc_html( $text['title'] ) . '</h2>';
+		}
+
+		return $html . wp_kses_post( $text['content'] ) . '</div>';
+	}
+
+	/**
+	 * [dernekyazilimi_payment_logos]
+	 *
+	 * Logos of the portal's card payment providers, e.g. for the footer.
+	 *
+	 * @return string
+	 */
+	public function payment_logos() {
+		$config = $this->client->config();
+		if ( is_wp_error( $config ) || empty( $config['payment']['logos'] ) ) {
+			return '';
+		}
+		wp_enqueue_style( 'dernekyazilimi-forms' );
+
+		ob_start();
+		echo '<div class="dernekyazilimi">';
+		$this->logos( $config );
+		echo '</div>';
+
+		return ob_get_clean();
+	}
+
+	/**
+	 * Logos the portal's card payment providers ask to be shown.
 	 *
 	 * @param array $config Portal configuration.
 	 */
-	private function privacy( array $config ) {
-		if ( empty( $config['privacy']['url'] ) ) {
+	private function logos( array $config ) {
+		$logos = (array) ( $config['payment']['logos'] ?? array() );
+		if ( ! $logos ) {
 			return;
 		}
-		$title = $config['privacy']['title'] ?? __( 'privacy policy', 'dernekyazilimi' );
-		$link  = '<a class="dy-doc-link" href="' . esc_url( $config['privacy']['url'] ) . '" target="_blank" rel="noopener">' . esc_html( $title ) . '</a>';
-		echo '<div class="dy-field" data-dy-field="agreement"><label class="dy-check"><input type="checkbox" name="agreement" value="1" required> <span>';
-		/* translators: %s: link to the privacy policy. */
-		echo wp_kses_post( sprintf( __( 'I have read and accept: %s', 'dernekyazilimi' ), $link ) );
-		echo ' <span class="dy-required" aria-hidden="true">*</span></span></label></div>';
+		echo '<p class="dy-logos">';
+		foreach ( $logos as $logo ) {
+			if ( empty( $logo['url'] ) ) {
+				continue;
+			}
+			// The image lives in the portal: the provider's own logo band, not a file of this plugin.
+			echo '<img src="' . esc_url( $logo['url'] ) . '" alt="' . esc_attr( $logo['label'] ?? '' ) . '" loading="lazy" decoding="async">';
+		}
+		echo '</p>';
+	}
+
+	/**
+	 * Checkboxes of the agreements in force in the portal, with the dialog
+	 * their texts open in.
+	 *
+	 * @param array $docs Field name => agreement of the configuration (or null).
+	 */
+	private function agreements( array $docs ) {
+		$docs = array_filter(
+			$docs,
+			function ( $doc ) {
+				return ! empty( $doc['url'] );
+			}
+		);
+		if ( ! $docs ) {
+			return;
+		}
+
+		foreach ( $docs as $name => $doc ) {
+			$title = $doc['title'] ?? __( 'agreement', 'dernekyazilimi' );
+			$link  = '<a class="dy-doc-link" href="' . esc_url( $doc['url'] ) . '" target="_blank" rel="noopener">' . esc_html( $title ) . '</a>';
+			echo '<div class="dy-field" data-dy-field="' . esc_attr( $name ) . '"><label class="dy-check"><input type="checkbox" name="' . esc_attr( $name ) . '" value="1" required> <span>';
+			/* translators: %s: link to the agreement, e.g. the privacy policy. */
+			echo wp_kses_post( sprintf( __( 'I have read and accept: %s', 'dernekyazilimi' ), $link ) );
+			echo ' <span class="dy-required" aria-hidden="true">*</span></span></label></div>';
+		}
 
 		// The text opens in a dialog over the page; without script the link opens a new tab.
 		$label = wp_unique_id( 'dy-doc-' );
+		$first = reset( $docs );
 		?>
 		<dialog class="dy-modal dy-doc-modal" aria-labelledby="<?php echo esc_attr( $label ); ?>">
 			<div class="dy-modal-head">
-				<strong id="<?php echo esc_attr( $label ); ?>"><?php echo esc_html( $title ); ?></strong>
+				<strong id="<?php echo esc_attr( $label ); ?>"></strong>
 				<button type="button" class="dy-modal-close" aria-label="<?php esc_attr_e( 'Close', 'dernekyazilimi' ); ?>">&times;</button>
 			</div>
 			<div class="dy-modal-body">
-				<iframe title="<?php echo esc_attr( $title ); ?>" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-				<p class="dy-hint dy-fallback"><?php esc_html_e( 'Page not showing?', 'dernekyazilimi' ); ?> <a href="<?php echo esc_url( $config['privacy']['url'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Open it in a new tab', 'dernekyazilimi' ); ?></a></p>
+				<iframe title="<?php esc_attr_e( 'Agreement text', 'dernekyazilimi' ); ?>" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+				<p class="dy-hint dy-fallback"><?php esc_html_e( 'Page not showing?', 'dernekyazilimi' ); ?> <a href="<?php echo esc_url( $first['url'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Open it in a new tab', 'dernekyazilimi' ); ?></a></p>
 			</div>
 		</dialog>
 		<?php

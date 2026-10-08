@@ -419,11 +419,27 @@ class Dernekyazilimi_Forms {
 		if ( empty( $config['privacy']['url'] ) ) {
 			return;
 		}
-		$link = '<a href="' . esc_url( $config['privacy']['url'] ) . '" target="_blank" rel="noopener">' . esc_html( $config['privacy']['title'] ?? __( 'privacy policy', 'dernekyazilimi' ) ) . '</a>';
+		$title = $config['privacy']['title'] ?? __( 'privacy policy', 'dernekyazilimi' );
+		$link  = '<a class="dy-doc-link" href="' . esc_url( $config['privacy']['url'] ) . '" target="_blank" rel="noopener">' . esc_html( $title ) . '</a>';
 		echo '<div class="dy-field" data-dy-field="agreement"><label class="dy-check"><input type="checkbox" name="agreement" value="1" required> <span>';
 		/* translators: %s: link to the privacy policy. */
 		echo wp_kses_post( sprintf( __( 'I have read and accept: %s', 'dernekyazilimi' ), $link ) );
 		echo ' <span class="dy-required" aria-hidden="true">*</span></span></label></div>';
+
+		// The text opens in a dialog over the page; without script the link opens a new tab.
+		$label = wp_unique_id( 'dy-doc-' );
+		?>
+		<dialog class="dy-modal dy-doc-modal" aria-labelledby="<?php echo esc_attr( $label ); ?>">
+			<div class="dy-modal-head">
+				<strong id="<?php echo esc_attr( $label ); ?>"><?php echo esc_html( $title ); ?></strong>
+				<button type="button" class="dy-modal-close" aria-label="<?php esc_attr_e( 'Close', 'dernekyazilimi' ); ?>">&times;</button>
+			</div>
+			<div class="dy-modal-body">
+				<iframe title="<?php echo esc_attr( $title ); ?>" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+				<p class="dy-hint dy-fallback"><?php esc_html_e( 'Page not showing?', 'dernekyazilimi' ); ?> <a href="<?php echo esc_url( $config['privacy']['url'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Open it in a new tab', 'dernekyazilimi' ); ?></a></p>
+			</div>
+		</dialog>
+		<?php
 	}
 
 	/**

@@ -162,7 +162,13 @@ msgstr ""
 msgid "This module is off in the portal."
 msgstr ""
 
-msgid "privacy policy"
+msgid "agreement"
+msgstr ""
+
+msgid "Agreement text"
+msgstr ""
+
+msgid "The portal has no published agreement with this key."
 msgstr ""
 
 msgid "I have read and accept: %s"

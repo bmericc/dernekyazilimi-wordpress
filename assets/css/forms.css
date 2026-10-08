@@ -247,7 +247,24 @@ html.dy-modal-open {
 	height: min(720px, calc(100dvh - 10rem));
 }
 
+/* Agreement text dialog. */
+.dernekyazilimi .dy-doc-modal {
+	width: 46rem;
+}
+
+.dernekyazilimi .dy-doc-modal iframe {
+	background: transparent;
+	border: 0;
+	display: block;
+	height: min(720px, calc(100dvh - 10rem));
+	width: 100%;
+}
+
 @media (max-width: 600px) {
+	.dernekyazilimi .dy-doc-modal iframe {
+		height: calc(100dvh - 7rem);
+	}
+
 	.dernekyazilimi .dy-modal {
 		border-radius: 0;
 		height: 100dvh;
@@ -255,4 +272,19 @@ html.dy-modal-open {
 		max-width: 100vw;
 		width: 100vw;
 	}
+}
+
+/* Logos of the card payment providers */
+.dernekyazilimi .dy-logos {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75em;
+	margin: 0.75em 0 0;
+}
+
+.dernekyazilimi .dy-logos img {
+	height: 28px;
+	width: auto;
+	max-width: 100%;
 }

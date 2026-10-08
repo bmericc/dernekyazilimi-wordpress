@@ -43,6 +43,8 @@ define( 'DERNEKYAZILIMI_API_KEY', 'dy_...' );
 | `[dernekyazilimi_donate]` | Bağış formu. İsteğe bağlı: `cause="3"` (seçili gelen bağış amacı), `amount="250"` |
 | `[dernekyazilimi_volunteer]` | Gönüllü kayıt formu |
 | `[dernekyazilimi_membership]` | Üyelik başvurusu |
+| `[dernekyazilimi_agreement key="payment-terms"]` | Portalda yayınlanan sözleşme metni (ör. ödeme, iptal ve iade koşulları); `title="1"` başlığı da yazar |
+| `[dernekyazilimi_payment_logos]` | Kart ödeme sağlayıcısının gösterilmesini istediği logolar (ör. alt bilgide) |
 
 Bir form portalda kapalıysa ziyaretçi kısa bir bilgi görür. Portala ulaşılamıyorsa ya da modül kapalıysa ziyaretçi hiçbir şey görmez, yönetici ise formun yerinde nedenini görür.
 

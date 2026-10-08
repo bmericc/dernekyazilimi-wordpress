@@ -4,7 +4,7 @@ Tags: donation, membership, volunteer, association, nonprofit
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.0.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,11 @@ Add a form with its block (search for "Dernek Yazılımı") or its shortcode:
 * `[dernekyazilimi_volunteer]`
 * `[dernekyazilimi_membership]`
 
+Two more shortcodes keep texts and logos in one place, the portal:
+
+* `[dernekyazilimi_agreement key="payment-terms"]` – the text of an agreement published in the portal, e.g. the payment, cancellation and refund terms, on a page of your site. `title="1"` adds the agreement's title as a heading.
+* `[dernekyazilimi_payment_logos]` – the logos your card payment provider asks you to show (for example in the footer).
+
 = Requirements =
 
 You need your own Dernek Yazılımı portal, served over HTTPS. In the portal's admin panel, under Settings → Organization settings:
@@ -44,7 +49,10 @@ What is sent, from your site's server to the portal, and when:
 * When a page with a form is shown (cached for five minutes): a request for the forms' configuration. It carries the API key and your site's address.
 * When a visitor asks for a verification code or enters it: the phone number and the code.
 * When a visitor submits the volunteer or membership form: first name, last name, email, phone number, communication permissions and the acceptance of the privacy policy.
-* When a visitor submits the donation form: amount, donation cause, name, email, phone, message, the choice to hide the name, payment method and the acceptance of the privacy policy.
+* When a visitor submits the donation form: amount, donation cause, name, email, phone, message, the choice to hide the name, payment method and the acceptance of the privacy policy and of the payment terms.
+* When a page with the agreement shortcode is shown (cached for five minutes): a request for the agreement's text.
+
+The logos of the card payment provider are images served by your portal; the visitor's browser loads them from the portal's address.
 
 With each of these the visitor's IP address and browser name are passed on, so that the portal can limit abuse and record who accepted the privacy policy.
 
@@ -80,6 +88,13 @@ Yes. The portal keeps the frame's session in a partitioned cookie, and the donat
 No. They are entered on the payment provider's page shown in the frame.
 
 == Changelog ==
+
+= 1.0.5 =
+* Donation form asks for the payment, cancellation and refund terms published in the portal and shows the logos of the card payment provider.
+* New shortcodes: `[dernekyazilimi_agreement]` shows an agreement text kept in the portal, `[dernekyazilimi_payment_logos]` shows the payment provider logos (e.g. in the footer).
+
+= 1.0.4 =
+* The agreement text opens in a dialog over the page.
 
 = 1.0.3 =
 * Fixed donation amounts look like the amount buttons.

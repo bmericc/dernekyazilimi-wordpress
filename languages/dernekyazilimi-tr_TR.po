@@ -162,8 +162,14 @@ msgstr "Portal parolanızı belirlemeniz için bağlantı içeren bir e-posta g�
 msgid "This module is off in the portal."
 msgstr "Bu modül portalda kapalı."
 
-msgid "privacy policy"
-msgstr "gizlilik politikası"
+msgid "agreement"
+msgstr "sözleşme"
+
+msgid "Agreement text"
+msgstr "Sözleşme metni"
+
+msgid "The portal has no published agreement with this key."
+msgstr "Portalda bu anahtarla yayınlanmış bir sözleşme yok."
 
 msgid "I have read and accept: %s"
 msgstr "Okudum ve kabul ediyorum: %s"

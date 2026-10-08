@@ -130,7 +130,38 @@
 			button.disabled = on;
 		}
 
-		var modal = root.querySelector( '.dy-modal' );
+		var modal = root.querySelector( '.dy-modal:not(.dy-doc-modal)' );
+		var docModal = root.querySelector( '.dy-doc-modal' );
+
+		// Agreement text: the portal's page opens in a dialog over the page.
+		if ( docModal && typeof docModal.showModal === 'function' ) {
+			var docFrame = docModal.querySelector( 'iframe' );
+			Array.prototype.forEach.call( root.querySelectorAll( '.dy-doc-link' ), function ( link ) {
+				link.addEventListener( 'click', function ( event ) {
+					if ( event.metaKey || event.ctrlKey || event.shiftKey ) {
+						return;
+					}
+					event.preventDefault();
+					docFrame.src = link.href;
+					docModal.querySelector( '.dy-modal-head strong' ).textContent = link.textContent;
+					docModal.querySelector( '.dy-fallback a' ).href = link.href;
+					document.documentElement.classList.add( 'dy-modal-open' );
+					docModal.showModal();
+				} );
+			} );
+			docModal.querySelector( '.dy-modal-close' ).addEventListener( 'click', function () {
+				docModal.close();
+			} );
+			docModal.addEventListener( 'click', function ( event ) {
+				if ( event.target === docModal ) {
+					docModal.close();
+				}
+			} );
+			docModal.addEventListener( 'close', function () {
+				document.documentElement.classList.remove( 'dy-modal-open' );
+				docFrame.src = 'about:blank';
+			} );
+		}
 		var framePlace = frameBox ? document.createComment( 'dy-frame' ) : null;
 		var resultUrl = '';
 		var reachedPortal = false;

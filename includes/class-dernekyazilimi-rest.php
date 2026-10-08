@@ -97,15 +97,16 @@ class Dernekyazilimi_Rest {
 		return $this->forward(
 			'donations',
 			array(
-				'amount'    => str_replace( ',', '.', sanitize_text_field( (string) $request->get_param( 'amount' ) ) ),
-				'cause_id'  => $cause ? $cause : null,
-				'name'      => sanitize_text_field( (string) $request->get_param( 'name' ) ),
-				'email'     => sanitize_email( (string) $request->get_param( 'email' ) ),
-				'phone'     => sanitize_text_field( (string) $request->get_param( 'phone' ) ),
-				'message'   => sanitize_textarea_field( (string) $request->get_param( 'message' ) ),
-				'hide_name' => rest_sanitize_boolean( $request->get_param( 'hide_name' ) ),
-				'method'    => sanitize_text_field( (string) $request->get_param( 'method' ) ),
-				'agreement' => rest_sanitize_boolean( $request->get_param( 'agreement' ) ) ? true : null,
+				'amount'        => str_replace( ',', '.', sanitize_text_field( (string) $request->get_param( 'amount' ) ) ),
+				'cause_id'      => $cause ? $cause : null,
+				'name'          => sanitize_text_field( (string) $request->get_param( 'name' ) ),
+				'email'         => sanitize_email( (string) $request->get_param( 'email' ) ),
+				'phone'         => sanitize_text_field( (string) $request->get_param( 'phone' ) ),
+				'message'       => sanitize_textarea_field( (string) $request->get_param( 'message' ) ),
+				'hide_name'     => rest_sanitize_boolean( $request->get_param( 'hide_name' ) ),
+				'method'        => sanitize_text_field( (string) $request->get_param( 'method' ) ),
+				'agreement'     => rest_sanitize_boolean( $request->get_param( 'agreement' ) ) ? true : null,
+				'payment_terms' => rest_sanitize_boolean( $request->get_param( 'payment_terms' ) ) ? true : null,
 			),
 			array( 'uuid', 'method', 'reference', 'frame_url', 'result_url' )
 		);

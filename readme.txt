@@ -94,6 +94,9 @@ No. They are entered on the payment provider's page shown in the frame.
 = 1.0.7 =
 * Donation form shows a Cloudflare Turnstile check when the portal has Turnstile keys, and sends its answer to the portal with the donation. This stops stolen cards from being tried through the form.
 
+= 1.0.6 =
+* Dialogs keep their size in themes that resize frames or use a small root font size (e.g. Twenty Twenty).
+
 = 1.0.5 =
 * Donation form asks for the payment, cancellation and refund terms published in the portal and shows the logos of the card payment provider.
 * New shortcodes: `[dernekyazilimi_agreement]` shows an agreement text kept in the portal, `[dernekyazilimi_payment_logos]` shows the payment provider logos (e.g. in the footer).

@@ -107,6 +107,7 @@ class Dernekyazilimi_Rest {
 				'method'        => sanitize_text_field( (string) $request->get_param( 'method' ) ),
 				'agreement'     => rest_sanitize_boolean( $request->get_param( 'agreement' ) ) ? true : null,
 				'payment_terms' => rest_sanitize_boolean( $request->get_param( 'payment_terms' ) ) ? true : null,
+				'turnstile'     => substr( sanitize_text_field( (string) $request->get_param( 'turnstile' ) ), 0, 2048 ),
 			),
 			array( 'uuid', 'method', 'reference', 'frame_url', 'result_url' )
 		);

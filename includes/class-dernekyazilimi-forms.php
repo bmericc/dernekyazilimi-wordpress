@@ -72,6 +72,9 @@ class Dernekyazilimi_Forms {
 			)
 		);
 
+		// Cloudflare Turnstile, drawn by forms.js once the script has loaded.
+		wp_register_script( 'dernekyazilimi-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=dernekyazilimiTurnstile', array( 'dernekyazilimi-forms' ), null, array( 'in_footer' => true, 'strategy' => 'defer' ) ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Cloudflare asks that the script is not versioned or cached.
+
 		add_shortcode( 'dernekyazilimi_donate', array( $this, 'donate' ) );
 		add_shortcode( 'dernekyazilimi_volunteer', array( $this, 'volunteer' ) );
 		add_shortcode( 'dernekyazilimi_membership', array( $this, 'membership' ) );
@@ -242,6 +245,13 @@ class Dernekyazilimi_Forms {
 				)
 			);
 			?>
+
+			<?php if ( ! empty( $donation['turnstile_site_key'] ) ) : ?>
+				<?php wp_enqueue_script( 'dernekyazilimi-turnstile' ); ?>
+				<div class="dy-field" data-dy-field="turnstile">
+					<div class="dy-turnstile" data-sitekey="<?php echo esc_attr( $donation['turnstile_site_key'] ); ?>"></div>
+				</div>
+			<?php endif; ?>
 
 			<p class="dy-message" role="alert" hidden></p>
 			<p class="dy-actions"><button type="submit" class="dy-submit wp-element-button"><?php esc_html_e( 'Donate', 'dernekyazilimi' ); ?></button></p>

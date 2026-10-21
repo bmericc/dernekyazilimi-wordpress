@@ -43,9 +43,32 @@
 		return data;
 	}
 
+	// Cloudflare Turnstile: the widget puts its answer in a "turnstile" field
+	// of the form. The script may already be on the page from another plugin.
+	function drawTurnstile() {
+		if ( ! window.turnstile ) {
+			return;
+		}
+		Array.prototype.forEach.call( document.querySelectorAll( '.dy-turnstile:not([data-dy-widget])' ), function ( box ) {
+			box.setAttribute( 'data-dy-widget', window.turnstile.render( box, {
+				sitekey: box.getAttribute( 'data-sitekey' ),
+				'response-field-name': 'turnstile',
+			} ) );
+		} );
+	}
+	window.dernekyazilimiTurnstile = drawTurnstile;
+
 	function setup( root ) {
 		var form = root.querySelector( '.dy-form' );
 		var message = root.querySelector( '.dy-message' );
+		var widget = root.querySelector( '.dy-turnstile' );
+
+		// An answer is good for one submission only.
+		function resetTurnstile() {
+			if ( widget && window.turnstile && widget.getAttribute( 'data-dy-widget' ) ) {
+				window.turnstile.reset( widget.getAttribute( 'data-dy-widget' ) );
+			}
+		}
 		var submit = root.querySelector( '.dy-submit' );
 		var frameBox = root.querySelector( '.dy-frame' );
 		var frame = frameBox ? frameBox.querySelector( 'iframe' ) : null;
@@ -345,6 +368,7 @@
 			busy( submit, true );
 			post( path, data ).then( function ( result ) {
 				busy( submit, false );
+				resetTurnstile();
 				if ( ! result.ok ) {
 					showErrors( result.body );
 					return;
@@ -362,12 +386,14 @@
 				}
 			} ).catch( function () {
 				busy( submit, false );
+				resetTurnstile();
 				say( i18n.failed );
 			} );
 		} );
 	}
 
 	function start() {
+		drawTurnstile();
 		Array.prototype.forEach.call( document.querySelectorAll( '.dernekyazilimi[data-dy-form]' ), function ( root ) {
 			if ( ! root.dataset.dyReady ) {
 				root.dataset.dyReady = '1';

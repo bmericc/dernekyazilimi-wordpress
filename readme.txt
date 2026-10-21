@@ -4,7 +4,7 @@ Tags: donation, membership, volunteer, association, nonprofit
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.5
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,8 +49,10 @@ What is sent, from your site's server to the portal, and when:
 * When a page with a form is shown (cached for five minutes): a request for the forms' configuration. It carries the API key and your site's address.
 * When a visitor asks for a verification code or enters it: the phone number and the code.
 * When a visitor submits the volunteer or membership form: first name, last name, email, phone number, communication permissions and the acceptance of the privacy policy.
-* When a visitor submits the donation form: amount, donation cause, name, email, phone, message, the choice to hide the name, payment method and the acceptance of the privacy policy and of the payment terms.
+* When a visitor submits the donation form: amount, donation cause, name, email, phone, message, the choice to hide the name, payment method, the acceptance of the privacy policy and of the payment terms, and the answer of the Cloudflare Turnstile check when it is on.
 * When a page with the agreement shortcode is shown (cached for five minutes): a request for the agreement's text.
+
+When the portal has Cloudflare Turnstile turned on, the donation form shows Cloudflare's human check: the visitor's browser loads its script from challenges.cloudflare.com, which receives the visitor's IP address and browser details to decide whether the visitor is a person. The answer is sent with the donation to the portal, which checks it with Cloudflare. Cloudflare's terms: https://www.cloudflare.com/website-terms/ – privacy policy: https://www.cloudflare.com/privacypolicy/
 
 The logos of the card payment provider are images served by your portal; the visitor's browser loads them from the portal's address.
 
@@ -88,6 +90,9 @@ Yes. The portal keeps the frame's session in a partitioned cookie, and the donat
 No. They are entered on the payment provider's page shown in the frame.
 
 == Changelog ==
+
+= 1.0.7 =
+* Donation form shows a Cloudflare Turnstile check when the portal has Turnstile keys, and sends its answer to the portal with the donation. This stops stolen cards from being tried through the form.
 
 = 1.0.5 =
 * Donation form asks for the payment, cancellation and refund terms published in the portal and shows the logos of the card payment provider.

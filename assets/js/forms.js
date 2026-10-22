@@ -58,6 +58,25 @@
 	}
 	window.dernekyazilimiTurnstile = drawTurnstile;
 
+	// Frames show "Loading…" until their page is in: a slow payment page
+	// otherwise looks like an empty, broken window.
+	function openFrame( iframe, url ) {
+		var loading = iframe.parentNode.querySelector( '.dy-loading' );
+		if ( loading ) {
+			loading.hidden = false;
+		}
+		iframe.src = url;
+	}
+
+	function watchFrame( iframe ) {
+		var loading = iframe.parentNode.querySelector( '.dy-loading' );
+		if ( loading ) {
+			iframe.addEventListener( 'load', function () {
+				loading.hidden = true;
+			} );
+		}
+	}
+
 	function setup( root ) {
 		var form = root.querySelector( '.dy-form' );
 		var message = root.querySelector( '.dy-message' );
@@ -159,13 +178,14 @@
 		// Agreement text: the portal's page opens in a dialog over the page.
 		if ( docModal && typeof docModal.showModal === 'function' ) {
 			var docFrame = docModal.querySelector( 'iframe' );
+			watchFrame( docFrame );
 			Array.prototype.forEach.call( root.querySelectorAll( '.dy-doc-link' ), function ( link ) {
 				link.addEventListener( 'click', function ( event ) {
 					if ( event.metaKey || event.ctrlKey || event.shiftKey ) {
 						return;
 					}
 					event.preventDefault();
-					docFrame.src = link.href;
+					openFrame( docFrame, link.href );
 					docModal.querySelector( '.dy-modal-head strong' ).textContent = link.textContent;
 					docModal.querySelector( '.dy-fallback a' ).href = link.href;
 					document.documentElement.classList.add( 'dy-modal-open' );
@@ -186,6 +206,9 @@
 			} );
 		}
 		var framePlace = frameBox ? document.createComment( 'dy-frame' ) : null;
+		if ( frame ) {
+			watchFrame( frame );
+		}
 		var resultUrl = '';
 		var reachedPortal = false;
 
@@ -195,7 +218,7 @@
 			noteBox.hidden = ! note;
 			frameBox.querySelector( '.dy-fallback a' ).href = url;
 			frame.style.height = '';
-			frame.src = url;
+			openFrame( frame, url );
 			form.hidden = true;
 			frameBox.hidden = false;
 			root.scrollIntoView( { block: 'start', behavior: 'smooth' } );
@@ -219,7 +242,7 @@
 			modal.querySelector( '.dy-modal-body' ).appendChild( frameBox );
 			frameBox.querySelector( '.dy-fallback a' ).href = url;
 			frame.style.height = '';
-			frame.src = url;
+			openFrame( frame, url );
 			frameBox.hidden = false;
 			document.documentElement.classList.add( 'dy-modal-open' );
 			modal.showModal();

@@ -547,7 +547,10 @@ class Dernekyazilimi_Forms {
 				<button type="button" class="dy-modal-close" aria-label="<?php esc_attr_e( 'Close', 'dernekyazilimi' ); ?>">&times;</button>
 			</div>
 			<div class="dy-modal-body">
-				<iframe title="<?php esc_attr_e( 'Agreement text', 'dernekyazilimi' ); ?>" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+				<div class="dy-frame-view">
+					<iframe title="<?php esc_attr_e( 'Agreement text', 'dernekyazilimi' ); ?>" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+					<?php $this->loading(); ?>
+				</div>
 				<p class="dy-hint dy-fallback"><?php esc_html_e( 'Page not showing?', 'dernekyazilimi' ); ?> <a href="<?php echo esc_url( $first['url'] ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Open it in a new tab', 'dernekyazilimi' ); ?></a></p>
 			</div>
 		</dialog>
@@ -562,6 +565,16 @@ class Dernekyazilimi_Forms {
 	}
 
 	/**
+	 * Shown over a frame until its page has loaded; a slow payment page
+	 * otherwise looks like an empty, broken window.
+	 */
+	private function loading() {
+		?>
+		<div class="dy-loading" role="status" hidden><span class="dy-spinner" aria-hidden="true"></span> <?php esc_html_e( 'Loading…', 'dernekyazilimi' ); ?></div>
+		<?php
+	}
+
+	/**
 	 * Where the portal's page is shown after the form. With a modal, the card
 	 * payment opens in a dialog over the page and the result returns here.
 	 *
@@ -572,7 +585,10 @@ class Dernekyazilimi_Forms {
 		?>
 		<div class="dy-frame" hidden>
 			<p class="dy-note" hidden></p>
-			<iframe title="<?php echo esc_attr( $title ); ?>" allow="payment" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+			<div class="dy-frame-view">
+				<iframe title="<?php echo esc_attr( $title ); ?>" allow="payment" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+				<?php $this->loading(); ?>
+			</div>
 			<p class="dy-hint dy-fallback"><?php esc_html_e( 'Page not showing?', 'dernekyazilimi' ); ?> <a href="#" target="_blank" rel="noopener"><?php esc_html_e( 'Open it in a new tab', 'dernekyazilimi' ); ?></a></p>
 		</div>
 		<?php if ( $modal ) : ?>

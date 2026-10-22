@@ -21,6 +21,9 @@ msgstr ""
 msgid "The portal could not be reached. Please try again in a moment."
 msgstr ""
 
+msgid "Loading…"
+msgstr ""
+
 msgid "Sending…"
 msgstr ""
 

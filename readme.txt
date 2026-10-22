@@ -4,7 +4,7 @@ Tags: donation, membership, volunteer, association, nonprofit
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.7
+Stable tag: 1.0.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -90,6 +90,9 @@ Yes. The portal keeps the frame's session in a partitioned cookie, and the donat
 No. They are entered on the payment provider's page shown in the frame.
 
 == Changelog ==
+
+= 1.0.8 =
+* Frames show "Loading…" until the page in them is in, so a slow payment page no longer looks like an empty window.
 
 = 1.0.7 =
 * Donation form shows a Cloudflare Turnstile check when the portal has Turnstile keys, and sends its answer to the portal with the donation. This stops stolen cards from being tried through the form.

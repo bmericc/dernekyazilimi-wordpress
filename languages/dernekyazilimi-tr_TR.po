@@ -21,6 +21,9 @@ msgstr "Portal beklenen yanıtı vermedi."
 msgid "The portal could not be reached. Please try again in a moment."
 msgstr "Portala ulaşılamadı. Lütfen biraz sonra tekrar deneyin."
 
+msgid "Loading…"
+msgstr "Yükleniyor…"
+
 msgid "Sending…"
 msgstr "Gönderiliyor…"
 

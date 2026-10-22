@@ -191,6 +191,47 @@
 	width: 100% !important;
 }
 
+.dernekyazilimi .dy-frame-view {
+	position: relative;
+}
+
+/* Over the frame until its page has loaded. */
+.dernekyazilimi .dy-loading {
+	align-items: center;
+	background: var(--wp--preset--color--base, #fff);
+	display: flex;
+	gap: 0.75em;
+	inset: 0;
+	justify-content: center;
+	position: absolute;
+}
+
+.dernekyazilimi .dy-loading[hidden] {
+	display: none;
+}
+
+.dernekyazilimi .dy-spinner {
+	animation: dy-spin 0.8s linear infinite;
+	border: 3px solid var(--dy-border);
+	border-radius: 50%;
+	border-top-color: var(--dy-accent);
+	display: inline-block;
+	height: 1.5em;
+	width: 1.5em;
+}
+
+@keyframes dy-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.dernekyazilimi .dy-spinner {
+		animation-duration: 2.4s;
+	}
+}
+
 /* Card payment dialog. */
 html.dy-modal-open {
 	overflow: hidden;

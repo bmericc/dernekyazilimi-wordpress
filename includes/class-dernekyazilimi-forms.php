@@ -75,6 +75,7 @@ class Dernekyazilimi_Forms {
 		// Cloudflare Turnstile, drawn by forms.js once the script has loaded.
 		wp_register_script( 'dernekyazilimi-turnstile', 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=dernekyazilimiTurnstile', array( 'dernekyazilimi-forms' ), null, array( 'in_footer' => true, 'strategy' => 'defer' ) ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Cloudflare asks that the script is not versioned or cached.
 
+		add_shortcode( 'dernekyazilimi_verify', array( $this, 'verify' ) );
 		add_shortcode( 'dernekyazilimi_donate', array( $this, 'donate' ) );
 		add_shortcode( 'dernekyazilimi_volunteer', array( $this, 'volunteer' ) );
 		add_shortcode( 'dernekyazilimi_membership', array( $this, 'membership' ) );
@@ -105,6 +106,10 @@ class Dernekyazilimi_Forms {
 					'title'       => __( 'Membership application', 'dernekyazilimi' ),
 					'description' => __( 'Membership application of your association\'s portal.', 'dernekyazilimi' ),
 				),
+				'verify' => array(
+					'title' => __( 'Document verification', 'dernekyazilimi' ),
+					'description' => __( 'Verify an official letter using its code.', 'dernekyazilimi' ),
+				),
 				'labels'     => array(
 					'settings' => __( 'Form settings', 'dernekyazilimi' ),
 					'cause'    => __( 'Donation cause number (optional)', 'dernekyazilimi' ),
@@ -124,6 +129,7 @@ class Dernekyazilimi_Forms {
 					'default' => '',
 				),
 			),
+			'verify' => array(),
 			'volunteer'  => array(),
 			'membership' => array(),
 		);
@@ -143,6 +149,41 @@ class Dernekyazilimi_Forms {
 				)
 			);
 		}
+	}
+
+	/** [dernekyazilimi_verify] — query-string codes are read in JS to work with page caches. */
+	public function verify( $atts = array() ) {
+		$config = $this->section( 'correspondence', __( 'Document verification is currently unavailable.', 'dernekyazilimi' ) );
+		if ( is_string( $config ) ) {
+			return $config;
+		}
+		wp_enqueue_style( 'dernekyazilimi-forms' );
+		wp_enqueue_script( 'dernekyazilimi-forms' );
+		$id = wp_unique_id( 'dy-verify-' );
+		ob_start();
+		?>
+		<div class="dernekyazilimi" data-dy-verify>
+			<form class="dy-form">
+				<?php $this->honeypot(); ?>
+				<div class="dy-field">
+					<label for="<?php echo esc_attr( $id ); ?>"><?php esc_html_e( 'Document verification code', 'dernekyazilimi' ); ?></label>
+					<input id="<?php echo esc_attr( $id ); ?>" name="kod" maxlength="36" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" required>
+				</div>
+				<button type="submit" class="wp-element-button"><?php esc_html_e( 'Verify document', 'dernekyazilimi' ); ?></button>
+			</form>
+			<noscript><?php esc_html_e( 'Enable JavaScript to verify a document.', 'dernekyazilimi' ); ?></noscript>
+			<div class="dy-message" role="status" aria-live="polite" hidden></div>
+			<div data-dy-document hidden>
+				<p data-dy-status data-active="<?php echo esc_attr__( 'This document is registered and has not been cancelled.', 'dernekyazilimi' ); ?>" data-cancelled="<?php echo esc_attr__( 'This document has been cancelled.', 'dernekyazilimi' ); ?>"></p>
+				<dl>
+					<dt><?php esc_html_e( 'Document number', 'dernekyazilimi' ); ?></dt><dd data-dy-value="document_no"></dd>
+					<dt><?php esc_html_e( 'Document date', 'dernekyazilimi' ); ?></dt><dd data-dy-value="document_date"></dd>
+					<dt><?php esc_html_e( 'Subject', 'dernekyazilimi' ); ?></dt><dd data-dy-value="subject"></dd>
+				</dl>
+			</div>
+		</div>
+		<?php
+		return ob_get_clean();
 	}
 
 	/**

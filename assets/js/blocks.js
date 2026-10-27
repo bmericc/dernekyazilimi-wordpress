@@ -59,6 +59,7 @@
 			} ),
 		];
 	} );
+	register( 'verify', 'yes-alt' );
 	register( 'volunteer', 'groups' );
 	register( 'membership', 'id' );
 }( window.wp, window.dernekyazilimiBlocks ) );

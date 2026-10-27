@@ -415,8 +415,56 @@
 		} );
 	}
 
+	function setupVerification( root ) {
+		var form = root.querySelector( 'form' );
+		var input = form.querySelector( '[name="kod"]' );
+		var button = form.querySelector( '[type="submit"]' );
+		var message = root.querySelector( '.dy-message' );
+		var documentBox = root.querySelector( '[data-dy-document]' );
+		var status = root.querySelector( '[data-dy-status]' );
+		function verify() {
+			documentBox.hidden = true;
+			message.hidden = false;
+			message.textContent = i18n.sending;
+			button.disabled = true;
+			post( 'documents/verify', values( form ) ).then( function ( result ) {
+				if ( ! result.ok ) {
+					message.textContent = result.body.message || i18n.failed;
+					return;
+				}
+				if ( [ 'numbered', 'cancelled' ].indexOf( result.body.status ) === -1 ) {
+					message.textContent = i18n.failed;
+					return;
+				}
+				Array.prototype.forEach.call( root.querySelectorAll( '[data-dy-value]' ), function ( field ) {
+					field.textContent = result.body[ field.dataset.dyValue ] || '—';
+				} );
+				status.textContent = result.body.status === 'cancelled' ? status.dataset.cancelled : status.dataset.active;
+				documentBox.hidden = false;
+				message.hidden = true;
+			} ).catch( function () {
+				message.textContent = i18n.failed;
+			} ).then( function () { button.disabled = false; } );
+		}
+		form.addEventListener( 'submit', function ( event ) {
+			event.preventDefault();
+			if ( ! button.disabled ) { verify(); }
+		} );
+		var code = new URLSearchParams( window.location.search ).get( 'kod' );
+		if ( code ) {
+			input.value = code;
+			verify();
+		}
+	}
+
 	function start() {
 		drawTurnstile();
+		Array.prototype.forEach.call( document.querySelectorAll( '[data-dy-verify]' ), function ( root ) {
+			if ( ! root.dataset.dyReady ) {
+				root.dataset.dyReady = '1';
+				setupVerification( root );
+			}
+		} );
 		Array.prototype.forEach.call( document.querySelectorAll( '.dernekyazilimi[data-dy-form]' ), function ( root ) {
 			if ( ! root.dataset.dyReady ) {
 				root.dataset.dyReady = '1';

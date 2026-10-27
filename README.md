@@ -40,6 +40,7 @@ define( 'DERNEKYAZILIMI_API_KEY', 'dy_...' );
 
 | Kısa kod | Açıklama |
 |---|---|
+| `[dernekyazilimi_verify]` | Belge doğrulama; `?kod=...` içeren QR bağlantılarını otomatik sorgular |
 | `[dernekyazilimi_donate]` | Bağış formu. İsteğe bağlı: `cause="3"` (seçili gelen bağış amacı), `amount="250"` |
 | `[dernekyazilimi_volunteer]` | Gönüllü kayıt formu |
 | `[dernekyazilimi_membership]` | Üyelik başvurusu |
@@ -47,6 +48,14 @@ define( 'DERNEKYAZILIMI_API_KEY', 'dy_...' );
 | `[dernekyazilimi_payment_logos]` | Kart ödeme sağlayıcısının gösterilmesini istediği logolar (ör. alt bilgide) |
 
 Bir form portalda kapalıysa ziyaretçi kısa bir bilgi görür. Portala ulaşılamıyorsa ya da modül kapalıysa ziyaretçi hiçbir şey görmez, yönetici ise formun yerinde nedenini görür.
+
+## Belge doğrulama
+
+1. WordPress’te “Belge doğrula” sayfası oluşturun; kalıcı bağlantısı `belge-dogrula` olsun.
+2. Sayfaya **Belge doğrulama** bloğunu veya `[dernekyazilimi_verify]` kısa kodunu ekleyin.
+3. Portalda **Yazışma ayarları → WordPress belge doğrulama sayfası** alanına bu sayfanın tam HTTPS adresini yazın.
+
+Yeni asıl yazıların QR kodu ve doğrulama bağlantısı bu sayfayı açar. Daha önce hazırlanmış veya imzalanmış PDF’ler değişmez; ek belgelere QR eklenmez. Ziyaretçi kodu elle yazabilir; QR ile gelirse sorgu otomatik yapılır. Yazı numarası, tarih, konu ve iptal durumu gösterilir; belge içeriği ve ekleri paylaşılmaz. Portalda Yazışmalar modülü ve eklentinin mevcut API bağlantısı etkin olmalıdır.
 
 ## Portala giden veri
 

@@ -159,6 +159,7 @@ class Dernekyazilimi_Settings {
 			<p><?php esc_html_e( 'Add a form to any page with its block (search for “Dernek Yazılımı” in the block inserter) or its shortcode:', 'dernekyazilimi' ); ?></p>
 			<table class="widefat striped" style="max-width: 760px;">
 				<tbody>
+					<tr><td><code>[dernekyazilimi_verify]</code></td><td><?php esc_html_e( 'Verify an official letter using its code.', 'dernekyazilimi' ); ?></td></tr>
 					<tr><td><code>[dernekyazilimi_donate]</code></td><td><?php esc_html_e( 'Donation form. Optional: cause="3" amount="250".', 'dernekyazilimi' ); ?></td></tr>
 					<tr><td><code>[dernekyazilimi_volunteer]</code></td><td><?php esc_html_e( 'Volunteer registration form.', 'dernekyazilimi' ); ?></td></tr>
 					<tr><td><code>[dernekyazilimi_membership]</code></td><td><?php esc_html_e( 'Membership application: opens the account here, the application continues in a frame.', 'dernekyazilimi' ); ?></td></tr>
@@ -190,6 +191,7 @@ class Dernekyazilimi_Settings {
 		echo esc_html( sprintf( __( 'Connected to the portal of %s.', 'dernekyazilimi' ), $config['organization']['name'] ?? '' ) );
 		echo '</p></div><ul class="ul-disc">';
 		$forms = array(
+			'correspondence' => __( 'Document verification', 'dernekyazilimi' ),
 			'donation'   => __( 'Donation', 'dernekyazilimi' ),
 			'volunteer'  => __( 'Volunteer registration', 'dernekyazilimi' ),
 			'membership' => __( 'Membership application', 'dernekyazilimi' ),

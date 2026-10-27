@@ -273,3 +273,42 @@ msgstr ""
 msgid "Close the payment window? If you have not finished paying, your donation will not be completed."
 msgstr ""
 
+
+msgid "Document verification"
+msgstr ""
+
+msgid "Verify an official letter using its code."
+msgstr ""
+
+msgid "Document verification is currently unavailable."
+msgstr ""
+
+msgid "Document verification code"
+msgstr ""
+
+msgid "Verify document"
+msgstr ""
+
+msgid "Enable JavaScript to verify a document."
+msgstr ""
+
+msgid "This document is registered and has not been cancelled."
+msgstr ""
+
+msgid "This document has been cancelled."
+msgstr ""
+
+msgid "Document number"
+msgstr ""
+
+msgid "Document date"
+msgstr ""
+
+msgid "Subject"
+msgstr ""
+
+msgid "Enter a valid document verification code."
+msgstr ""
+
+msgid "No document was found with this code."
+msgstr ""

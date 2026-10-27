@@ -44,6 +44,7 @@ class Dernekyazilimi_Rest {
 	 */
 	public function routes() {
 		$routes = array(
+			'/documents/verify' => 'document_verify',
 			'/donations'    => 'donation',
 			'/phone/send'   => 'phone_send',
 			'/phone/verify' => 'phone_verify',
@@ -83,6 +84,19 @@ class Dernekyazilimi_Rest {
 		set_transient( $key, $count + 1, MINUTE_IN_SECONDS );
 
 		return true;
+	}
+
+	/** Verify a document without exposing its content or the API key. */
+	public function document_verify( WP_REST_Request $request ) {
+		$code = $request->get_param( 'kod' );
+		if ( ! is_string( $code ) || ! preg_match( '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/iD', trim( $code ) ) ) {
+			return new WP_REST_Response( array( 'message' => __( 'Enter a valid document verification code.', 'dernekyazilimi' ) ), 422 );
+		}
+
+		$response = $this->forward( 'documents/verify?kod=' . rawurlencode( strtoupper( trim( $code ) ) ), array(), array( 'document_no', 'document_date', 'subject', 'status' ), 'GET' );
+		$response->header( 'Cache-Control', 'no-store' );
+
+		return $response;
 	}
 
 	/**
@@ -193,14 +207,15 @@ class Dernekyazilimi_Rest {
 	 * @param string   $path Path under /api/site.
 	 * @param array    $data Values.
 	 * @param string[] $keep Keys of a successful answer the form may see.
+	 * @param string   $method HTTP method.
 	 * @return WP_REST_Response
 	 */
-	private function forward( $path, array $data, array $keep ) {
+	private function forward( $path, array $data, array $keep, $method = 'POST' ) {
 		if ( ! $this->client->configured() ) {
 			return new WP_REST_Response( array( 'message' => __( 'This form is not set up yet.', 'dernekyazilimi' ) ), 503 );
 		}
 
-		$response = $this->client->request( 'POST', $path, $data );
+		$response = $this->client->request( $method, $path, $data );
 		if ( is_wp_error( $response ) ) {
 			return new WP_REST_Response( array( 'message' => $response->get_error_message() ), 502 );
 		}
@@ -217,6 +232,10 @@ class Dernekyazilimi_Rest {
 			}
 
 			return new WP_REST_Response( $answer, 200 );
+		}
+
+		if ( 404 === $status && 0 === strpos( $path, 'documents/verify?' ) ) {
+			return new WP_REST_Response( array( 'message' => __( 'No document was found with this code.', 'dernekyazilimi' ) ), 404 );
 		}
 
 		if ( 422 === $status || 429 === $status ) {

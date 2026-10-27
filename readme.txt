@@ -4,7 +4,7 @@ Tags: donation, membership, volunteer, association, nonprofit
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,7 +44,7 @@ Then enter the portal address and the key under Settings → Dernek Yazılımı 
 
 == External services ==
 
-Document verification sends the entered document code to your own portal through the plugin's server-side API connection. Only the document number, date, subject and status are returned. No PDF or attachment is exposed. Create a page containing `[dernekyazilimi_verify]` and set its HTTPS address in the portal's correspondence settings to use it in new QR links.
+Document verification sends the entered document code to your own portal through the plugin's server-side API connection. Document metadata and public file links are returned to visitors who know the verification code. The letter and attachments are available through verification-code links. Create a page containing `[dernekyazilimi_verify]` and set its HTTPS address in the portal's correspondence settings to use it in new QR links.
 
 
 This plugin connects to the Dernek Yazılımı portal of your own association, at the address you enter in the plugin's settings. It is not a third-party service run by the plugin's authors: the portal is software your association hosts, and your association's own terms and privacy policy apply (the forms link to the privacy policy published in the portal).
@@ -95,6 +95,9 @@ Yes. The portal keeps the frame's session in a partitioned cookie, and the donat
 No. They are entered on the payment provider's page shown in the frame.
 
 == Changelog ==
+
+= 1.0.10 =
+* Document verification shows the letter, PDF attachments and original file downloads.
 
 = 1.0.9 =
 * Document verification block and shortcode; automatic lookup from QR links.

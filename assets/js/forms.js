@@ -422,8 +422,31 @@
 		var message = root.querySelector( '.dy-message' );
 		var documentBox = root.querySelector( '[data-dy-document]' );
 		var status = root.querySelector( '[data-dy-status]' );
+		var files = root.querySelector( '[data-dy-files]' );
+		var preview = root.querySelector( '[data-dy-preview]' );
+		function publicUrl( value ) {
+			try {
+				var url = new URL( value );
+				return url.protocol === 'https:' && url.origin === settings.portalOrigin ? url.href : '';
+			} catch ( error ) { return ''; }
+		}
+		function fileLink( label, value ) {
+			var paragraph = document.createElement( 'p' );
+			var url = publicUrl( value );
+			if ( url ) {
+				var link = document.createElement( 'a' );
+				link.textContent = label;
+				link.href = url;
+				link.target = '_blank';
+				link.rel = 'noopener noreferrer';
+				paragraph.appendChild( link );
+			} else { paragraph.textContent = label; }
+			files.appendChild( paragraph );
+		}
 		function verify() {
 			documentBox.hidden = true;
+			if ( preview ) { preview.hidden = true; preview.removeAttribute( 'src' ); }
+			if ( files ) { files.textContent = ''; }
 			message.hidden = false;
 			message.textContent = i18n.sending;
 			button.disabled = true;
@@ -440,6 +463,15 @@
 					field.textContent = result.body[ field.dataset.dyValue ] || '—';
 				} );
 				status.textContent = result.body.status === 'cancelled' ? status.dataset.cancelled : status.dataset.active;
+				if ( files ) {
+					if ( publicUrl( result.body.preview_url ) ) { fileLink( files.dataset.previewLabel, result.body.preview_url ); }
+					if ( publicUrl( result.body.original_url ) ) { fileLink( files.dataset.originalLabel, result.body.original_url ); }
+					( Array.isArray( result.body.attachments ) ? result.body.attachments : [] ).forEach( function ( attachment ) { fileLink( attachment.name, attachment.url ); } );
+				}
+				if ( preview && publicUrl( result.body.preview_url ) ) {
+					preview.src = publicUrl( result.body.preview_url );
+					preview.hidden = false;
+				}
 				documentBox.hidden = false;
 				message.hidden = true;
 			} ).catch( function () {

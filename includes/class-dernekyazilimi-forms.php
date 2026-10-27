@@ -180,6 +180,9 @@ class Dernekyazilimi_Forms {
 					<dt><?php esc_html_e( 'Document date', 'dernekyazilimi' ); ?></dt><dd data-dy-value="document_date"></dd>
 					<dt><?php esc_html_e( 'Subject', 'dernekyazilimi' ); ?></dt><dd data-dy-value="subject"></dd>
 				</dl>
+				<div data-dy-files data-preview-label="<?php echo esc_attr__( 'Open letter and PDF attachments', 'dernekyazilimi' ); ?>" data-original-label="<?php echo esc_attr__( 'Open original PDF', 'dernekyazilimi' ); ?>"></div>
+				<p><?php esc_html_e( 'The combined PDF is a viewing copy. Use the original files to verify electronic signatures.', 'dernekyazilimi' ); ?></p>
+				<iframe data-dy-preview title="<?php echo esc_attr__( 'Letter and PDF attachments', 'dernekyazilimi' ); ?>" style="width:100%;height:75vh;border:1px solid #ddd" hidden></iframe>
 			</div>
 		</div>
 		<?php

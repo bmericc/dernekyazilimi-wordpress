@@ -312,3 +312,15 @@ msgstr ""
 
 msgid "No document was found with this code."
 msgstr ""
+
+msgid "Open letter and PDF attachments"
+msgstr ""
+
+msgid "Open original PDF"
+msgstr ""
+
+msgid "The combined PDF is a viewing copy. Use the original files to verify electronic signatures."
+msgstr ""
+
+msgid "Letter and PDF attachments"
+msgstr ""

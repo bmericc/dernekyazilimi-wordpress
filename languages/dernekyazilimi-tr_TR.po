@@ -312,3 +312,15 @@ msgstr "Geçerli bir belge doğrulama kodu girin."
 
 msgid "No document was found with this code."
 msgstr "Bu kodla kayıtlı bir belge bulunamadı."
+
+msgid "Open letter and PDF attachments"
+msgstr "Yazı ve PDF eklerini aç"
+
+msgid "Open original PDF"
+msgstr "Asıl PDF’yi aç"
+
+msgid "The combined PDF is a viewing copy. Use the original files to verify electronic signatures."
+msgstr "Birleşik PDF bir görüntüleme kopyasıdır. Elektronik imzayı doğrulamak için asıl dosyaları kullanın."
+
+msgid "Letter and PDF attachments"
+msgstr "Asıl yazı ve PDF ekleri"

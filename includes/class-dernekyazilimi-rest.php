@@ -86,14 +86,14 @@ class Dernekyazilimi_Rest {
 		return true;
 	}
 
-	/** Verify a document without exposing its content or the API key. */
+	/** Verify a document and return its public file links without exposing the API key. */
 	public function document_verify( WP_REST_Request $request ) {
 		$code = $request->get_param( 'kod' );
 		if ( ! is_string( $code ) || ! preg_match( '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/iD', trim( $code ) ) ) {
 			return new WP_REST_Response( array( 'message' => __( 'Enter a valid document verification code.', 'dernekyazilimi' ) ), 422 );
 		}
 
-		$response = $this->forward( 'documents/verify?kod=' . rawurlencode( strtoupper( trim( $code ) ) ), array(), array( 'document_no', 'document_date', 'subject', 'status' ), 'GET' );
+		$response = $this->forward( 'documents/verify?kod=' . rawurlencode( strtoupper( trim( $code ) ) ), array(), array( 'document_no', 'document_date', 'subject', 'status', 'preview_url', 'original_url', 'attachments' ), 'GET' );
 		$response->header( 'Cache-Control', 'no-store' );
 
 		return $response;
@@ -225,10 +225,19 @@ class Dernekyazilimi_Rest {
 
 		if ( $status >= 200 && $status < 300 ) {
 			$answer = array_intersect_key( $body, array_flip( $keep ) );
-			foreach ( array( 'frame_url', 'result_url', 'continue_url' ) as $key ) {
+			foreach ( array( 'frame_url', 'result_url', 'continue_url', 'preview_url', 'original_url' ) as $key ) {
 				if ( isset( $answer[ $key ] ) ) {
 					$answer[ $key ] = esc_url_raw( (string) $answer[ $key ], array( 'https' ) );
 				}
+			}
+
+			if ( isset( $answer['attachments'] ) ) {
+				$answer['attachments'] = array_map( static function ( $attachment ) {
+					return array(
+						'name' => sanitize_text_field( (string) ( $attachment['name'] ?? '' ) ),
+						'url' => empty( $attachment['url'] ) ? null : esc_url_raw( (string) $attachment['url'], array( 'https' ) ),
+					);
+				}, array_filter( (array) $answer['attachments'], 'is_array' ) );
 			}
 
 			return new WP_REST_Response( $answer, 200 );

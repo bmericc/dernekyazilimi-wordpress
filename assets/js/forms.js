@@ -53,10 +53,20 @@
 			box.setAttribute( 'data-dy-widget', window.turnstile.render( box, {
 				sitekey: box.getAttribute( 'data-sitekey' ),
 				'response-field-name': 'turnstile',
+				callback: function () {
+					box.dispatchEvent( new CustomEvent( 'dy-turnstile-done' ) );
+				},
 			} ) );
 		} );
 	}
 	window.dernekyazilimiTurnstile = drawTurnstile;
+
+	// An answer is good for one submission only.
+	function resetTurnstile( box ) {
+		if ( box && window.turnstile && box.getAttribute( 'data-dy-widget' ) ) {
+			window.turnstile.reset( box.getAttribute( 'data-dy-widget' ) );
+		}
+	}
 
 	// Frames show "Loading…" until their page is in: a slow payment page
 	// otherwise looks like an empty, broken window.
@@ -81,13 +91,6 @@
 		var form = root.querySelector( '.dy-form' );
 		var message = root.querySelector( '.dy-message' );
 		var widget = root.querySelector( '.dy-turnstile' );
-
-		// An answer is good for one submission only.
-		function resetTurnstile() {
-			if ( widget && window.turnstile && widget.getAttribute( 'data-dy-widget' ) ) {
-				window.turnstile.reset( widget.getAttribute( 'data-dy-widget' ) );
-			}
-		}
 		var submit = root.querySelector( '.dy-submit' );
 		var frameBox = root.querySelector( '.dy-frame' );
 		var frame = frameBox ? frameBox.querySelector( 'iframe' ) : null;
@@ -391,7 +394,7 @@
 			busy( submit, true );
 			post( path, data ).then( function ( result ) {
 				busy( submit, false );
-				resetTurnstile();
+				resetTurnstile( widget );
 				if ( ! result.ok ) {
 					showErrors( result.body );
 					return;
@@ -409,7 +412,7 @@
 				}
 			} ).catch( function () {
 				busy( submit, false );
-				resetTurnstile();
+				resetTurnstile( widget );
 				say( i18n.failed );
 			} );
 		} );
@@ -419,73 +422,137 @@
 		var form = root.querySelector( 'form' );
 		var input = form.querySelector( '[name="kod"]' );
 		var button = form.querySelector( '[type="submit"]' );
+		var widget = form.querySelector( '.dy-turnstile' );
 		var message = root.querySelector( '.dy-message' );
 		var documentBox = root.querySelector( '[data-dy-document]' );
+		var headline = root.querySelector( '[data-dy-headline]' );
 		var status = root.querySelector( '[data-dy-status]' );
 		var files = root.querySelector( '[data-dy-files]' );
+		var attachments = root.querySelector( '[data-dy-attachments]' );
 		var preview = root.querySelector( '[data-dy-preview]' );
+		var waiting = false;
+
+		function say( text, failed ) {
+			message.textContent = text || '';
+			message.hidden = ! text;
+			message.classList.toggle( 'dy-failed', !! failed );
+		}
 		function publicUrl( value ) {
 			try {
 				var url = new URL( value );
 				return url.protocol === 'https:' && url.origin === settings.portalOrigin ? url.href : '';
 			} catch ( error ) { return ''; }
 		}
-		function fileLink( label, value ) {
-			var paragraph = document.createElement( 'p' );
+		function fileButton( label, value, outline, download ) {
 			var url = publicUrl( value );
+			if ( ! url ) { return; }
+			var link = document.createElement( 'a' );
+			link.className = 'wp-element-button' + ( outline ? ' is-style-outline' : '' );
+			link.textContent = label;
+			link.href = url;
+			if ( ! download ) {
+				link.target = '_blank';
+				link.rel = 'noopener noreferrer';
+			}
+			files.appendChild( link );
+		}
+		function attachmentRow( attachment ) {
+			var row = document.createElement( 'li' );
+			var url = publicUrl( attachment.url );
 			if ( url ) {
 				var link = document.createElement( 'a' );
-				link.textContent = label;
+				link.textContent = attachment.name;
 				link.href = url;
 				link.target = '_blank';
 				link.rel = 'noopener noreferrer';
-				paragraph.appendChild( link );
-			} else { paragraph.textContent = label; }
-			files.appendChild( paragraph );
+				row.appendChild( link );
+			} else {
+				row.textContent = attachment.name + ' (' + attachments.dataset.physicalLabel + ')';
+			}
+			attachments.querySelector( 'ul' ).appendChild( row );
+			attachments.hidden = false;
+		}
+		function clearDocument() {
+			documentBox.hidden = true;
+			attachments.hidden = true;
+			preview.hidden = true;
+			preview.removeAttribute( 'src' );
+			files.textContent = '';
+			attachments.querySelector( 'ul' ).textContent = '';
+		}
+		function show( body ) {
+			var cancelled = body.status === 'cancelled';
+			Array.prototype.forEach.call( root.querySelectorAll( '[data-dy-value]' ), function ( field ) {
+				field.textContent = body[ field.dataset.dyValue ] || '—';
+			} );
+			documentBox.classList.toggle( 'is-cancelled', cancelled );
+			headline.textContent = cancelled ? headline.dataset.cancelled : headline.dataset.active;
+			status.textContent = cancelled ? status.dataset.cancelled : status.dataset.active;
+			fileButton( files.dataset.previewLabel, body.preview_url, false, false );
+			fileButton( files.dataset.downloadLabel, body.download_url, true, true );
+			fileButton( files.dataset.originalLabel, body.original_url, true, false );
+			( Array.isArray( body.attachments ) ? body.attachments : [] ).forEach( attachmentRow );
+			if ( publicUrl( body.preview_url ) ) {
+				preview.src = publicUrl( body.preview_url );
+				preview.hidden = false;
+			}
+			form.hidden = true;
+			documentBox.hidden = false;
+			say( '' );
+			headline.focus();
 		}
 		function verify() {
-			documentBox.hidden = true;
-			if ( preview ) { preview.hidden = true; preview.removeAttribute( 'src' ); }
-			if ( files ) { files.textContent = ''; }
-			message.hidden = false;
-			message.textContent = i18n.sending;
+			waiting = false;
+			clearDocument();
+			say( i18n.sending );
 			button.disabled = true;
 			post( 'documents/verify', values( form ) ).then( function ( result ) {
 				if ( ! result.ok ) {
-					message.textContent = result.body.message || i18n.failed;
-					return;
+					say( result.body.message || i18n.failed, true );
+				} else if ( [ 'numbered', 'cancelled' ].indexOf( result.body.status ) === -1 ) {
+					say( i18n.failed, true );
+				} else {
+					show( result.body );
 				}
-				if ( [ 'numbered', 'cancelled' ].indexOf( result.body.status ) === -1 ) {
-					message.textContent = i18n.failed;
-					return;
-				}
-				Array.prototype.forEach.call( root.querySelectorAll( '[data-dy-value]' ), function ( field ) {
-					field.textContent = result.body[ field.dataset.dyValue ] || '—';
-				} );
-				status.textContent = result.body.status === 'cancelled' ? status.dataset.cancelled : status.dataset.active;
-				if ( files ) {
-					if ( publicUrl( result.body.preview_url ) ) { fileLink( files.dataset.previewLabel, result.body.preview_url ); }
-					if ( publicUrl( result.body.original_url ) ) { fileLink( files.dataset.originalLabel, result.body.original_url ); }
-					( Array.isArray( result.body.attachments ) ? result.body.attachments : [] ).forEach( function ( attachment ) { fileLink( attachment.name, attachment.url ); } );
-				}
-				if ( preview && publicUrl( result.body.preview_url ) ) {
-					preview.src = publicUrl( result.body.preview_url );
-					preview.hidden = false;
-				}
-				documentBox.hidden = false;
-				message.hidden = true;
 			} ).catch( function () {
-				message.textContent = i18n.failed;
-			} ).then( function () { button.disabled = false; } );
+				say( i18n.failed, true );
+			} ).then( function () {
+				button.disabled = false;
+				if ( ! form.hidden ) {
+					resetTurnstile( widget );
+				}
+			} );
+		}
+		// The check may still be running, above all for a code from a QR link:
+		// the lookup then starts as soon as its answer is in.
+		function request() {
+			if ( ! widget || ( form.elements.turnstile && form.elements.turnstile.value ) ) {
+				verify();
+				return;
+			}
+			waiting = true;
+			say( i18n.humanCheck );
+		}
+		if ( widget ) {
+			widget.addEventListener( 'dy-turnstile-done', function () {
+				if ( waiting ) { verify(); }
+			} );
 		}
 		form.addEventListener( 'submit', function ( event ) {
 			event.preventDefault();
-			if ( ! button.disabled ) { verify(); }
+			if ( ! button.disabled ) { request(); }
+		} );
+		root.querySelector( '[data-dy-again]' ).addEventListener( 'click', function () {
+			clearDocument();
+			form.hidden = false;
+			resetTurnstile( widget );
+			input.value = '';
+			input.focus();
 		} );
 		var code = new URLSearchParams( window.location.search ).get( 'kod' );
 		if ( code ) {
 			input.value = code;
-			verify();
+			request();
 		}
 	}
 

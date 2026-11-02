@@ -68,6 +68,7 @@ class Dernekyazilimi_Forms {
 					'sendAgain'    => __( 'Send again', 'dernekyazilimi' ),
 					'existingNote' => __( 'This email already has a portal account. Sign in below to continue.', 'dernekyazilimi' ),
 					'closePayment' => __( 'Close the payment window? If you have not finished paying, your donation will not be completed.', 'dernekyazilimi' ),
+					'humanCheck'   => __( 'Waiting for the security check…', 'dernekyazilimi' ),
 				),
 			)
 		);
@@ -162,31 +163,64 @@ class Dernekyazilimi_Forms {
 		$id = wp_unique_id( 'dy-verify-' );
 		ob_start();
 		?>
-		<div class="dernekyazilimi" data-dy-verify>
+		<div class="dernekyazilimi dy-verify" data-dy-verify>
 			<form class="dy-form">
 				<?php $this->honeypot(); ?>
 				<div class="dy-field">
 					<label for="<?php echo esc_attr( $id ); ?>"><?php esc_html_e( 'Document verification code', 'dernekyazilimi' ); ?></label>
-					<input id="<?php echo esc_attr( $id ); ?>" name="kod" maxlength="36" autocomplete="off" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" required>
+					<input id="<?php echo esc_attr( $id ); ?>" name="kod" maxlength="36" autocomplete="off" spellcheck="false" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" required>
+					<p class="dy-hint"><?php esc_html_e( 'Enter the code printed at the bottom of the letter.', 'dernekyazilimi' ); ?></p>
 				</div>
-				<button type="submit" class="wp-element-button"><?php esc_html_e( 'Verify document', 'dernekyazilimi' ); ?></button>
+				<?php if ( ! empty( $config['correspondence']['turnstile_site_key'] ) ) : ?>
+					<?php wp_enqueue_script( 'dernekyazilimi-turnstile' ); ?>
+					<div class="dy-field">
+						<div class="dy-turnstile" data-sitekey="<?php echo esc_attr( $config['correspondence']['turnstile_site_key'] ); ?>"></div>
+					</div>
+				<?php endif; ?>
+				<p class="dy-actions"><button type="submit" class="wp-element-button"><?php esc_html_e( 'Verify document', 'dernekyazilimi' ); ?></button></p>
 			</form>
 			<noscript><?php esc_html_e( 'Enable JavaScript to verify a document.', 'dernekyazilimi' ); ?></noscript>
-			<div class="dy-message" role="status" aria-live="polite" hidden></div>
-			<div data-dy-document hidden>
-				<p data-dy-status data-active="<?php echo esc_attr__( 'This document is registered and has not been cancelled.', 'dernekyazilimi' ); ?>" data-cancelled="<?php echo esc_attr__( 'This document has been cancelled.', 'dernekyazilimi' ); ?>"></p>
-				<dl>
+			<p class="dy-message" role="status" aria-live="polite" hidden></p>
+			<div class="dy-document" data-dy-document hidden>
+				<div class="dy-document-head">
+					<?php
+					$this->shield( 'dy-shield-valid', 'M9 12l2 2l4 -4' );
+					$this->shield( 'dy-shield-cancelled', 'M10 10l4 4m0 -4l-4 4' );
+					?>
+					<h2 tabindex="-1" data-dy-headline data-active="<?php echo esc_attr__( 'Document verified', 'dernekyazilimi' ); ?>" data-cancelled="<?php echo esc_attr__( 'Cancelled document', 'dernekyazilimi' ); ?>"></h2>
+					<p data-dy-status data-active="<?php echo esc_attr__( 'This document is registered and has not been cancelled.', 'dernekyazilimi' ); ?>" data-cancelled="<?php echo esc_attr__( 'This document has been cancelled.', 'dernekyazilimi' ); ?>"></p>
+				</div>
+				<dl class="dy-document-facts">
 					<dt><?php esc_html_e( 'Document number', 'dernekyazilimi' ); ?></dt><dd data-dy-value="document_no"></dd>
 					<dt><?php esc_html_e( 'Document date', 'dernekyazilimi' ); ?></dt><dd data-dy-value="document_date"></dd>
 					<dt><?php esc_html_e( 'Subject', 'dernekyazilimi' ); ?></dt><dd data-dy-value="subject"></dd>
 				</dl>
-				<div data-dy-files data-preview-label="<?php echo esc_attr__( 'Open letter and PDF attachments', 'dernekyazilimi' ); ?>" data-original-label="<?php echo esc_attr__( 'Open original PDF', 'dernekyazilimi' ); ?>"></div>
-				<p><?php esc_html_e( 'The combined PDF is a viewing copy. Use the original files to verify electronic signatures.', 'dernekyazilimi' ); ?></p>
-				<iframe data-dy-preview title="<?php echo esc_attr__( 'Letter and PDF attachments', 'dernekyazilimi' ); ?>" style="width:100%;height:75vh;border:1px solid #ddd" hidden></iframe>
+				<div class="dy-document-files" data-dy-files data-preview-label="<?php echo esc_attr__( 'Open PDF', 'dernekyazilimi' ); ?>" data-download-label="<?php echo esc_attr__( 'Download PDF', 'dernekyazilimi' ); ?>" data-original-label="<?php echo esc_attr__( 'Open original PDF', 'dernekyazilimi' ); ?>"></div>
+				<p class="dy-hint"><?php esc_html_e( 'The combined PDF is a viewing copy. Use the original files to verify electronic signatures.', 'dernekyazilimi' ); ?></p>
+				<div data-dy-attachments data-physical-label="<?php echo esc_attr__( 'physical attachment', 'dernekyazilimi' ); ?>" hidden>
+					<h3><?php esc_html_e( 'Attachments', 'dernekyazilimi' ); ?></h3>
+					<ul></ul>
+				</div>
+				<iframe class="dy-document-preview" data-dy-preview title="<?php echo esc_attr__( 'Letter and PDF attachments', 'dernekyazilimi' ); ?>" hidden></iframe>
+				<p class="dy-actions"><button type="button" class="wp-element-button is-style-outline" data-dy-again><?php esc_html_e( 'Verify another document', 'dernekyazilimi' ); ?></button></p>
 			</div>
 		</div>
 		<?php
 		return ob_get_clean();
+	}
+
+	/**
+	 * The shield of a verification result, as on the portal's pages.
+	 *
+	 * @param string $class CSS class.
+	 * @param string $mark  SVG path of the mark inside the shield.
+	 */
+	private function shield( $class, $mark ) {
+		printf(
+			'<span class="dy-shield %s"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="%s"/></svg></span>',
+			esc_attr( $class ),
+			esc_attr( $mark )
+		);
 	}
 
 	/**

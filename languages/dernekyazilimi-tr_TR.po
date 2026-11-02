@@ -313,9 +313,6 @@ msgstr "Geçerli bir belge doğrulama kodu girin."
 msgid "No document was found with this code."
 msgstr "Bu kodla kayıtlı bir belge bulunamadı."
 
-msgid "Open letter and PDF attachments"
-msgstr "Yazı ve PDF eklerini aç"
-
 msgid "Open original PDF"
 msgstr "Asıl PDF’yi aç"
 
@@ -324,3 +321,30 @@ msgstr "Birleşik PDF bir görüntüleme kopyasıdır. Elektronik imzayı doğru
 
 msgid "Letter and PDF attachments"
 msgstr "Asıl yazı ve PDF ekleri"
+
+msgid "Enter the code printed at the bottom of the letter."
+msgstr "Yazının altındaki belge doğrulama kodunu yazın."
+
+msgid "Document verified"
+msgstr "Belge doğrulandı"
+
+msgid "Cancelled document"
+msgstr "İptal edilmiş belge"
+
+msgid "Open PDF"
+msgstr "PDF’yi aç"
+
+msgid "Download PDF"
+msgstr "PDF’yi indir"
+
+msgid "physical attachment"
+msgstr "fiziksel ek"
+
+msgid "Attachments"
+msgstr "Ekler"
+
+msgid "Verify another document"
+msgstr "Başka bir belge doğrula"
+
+msgid "Waiting for the security check…"
+msgstr "Güvenlik doğrulaması bekleniyor…"

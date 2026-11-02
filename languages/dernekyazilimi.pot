@@ -313,9 +313,6 @@ msgstr ""
 msgid "No document was found with this code."
 msgstr ""
 
-msgid "Open letter and PDF attachments"
-msgstr ""
-
 msgid "Open original PDF"
 msgstr ""
 
@@ -323,4 +320,31 @@ msgid "The combined PDF is a viewing copy. Use the original files to verify elec
 msgstr ""
 
 msgid "Letter and PDF attachments"
+msgstr ""
+
+msgid "Enter the code printed at the bottom of the letter."
+msgstr ""
+
+msgid "Document verified"
+msgstr ""
+
+msgid "Cancelled document"
+msgstr ""
+
+msgid "Open PDF"
+msgstr ""
+
+msgid "Download PDF"
+msgstr ""
+
+msgid "physical attachment"
+msgstr ""
+
+msgid "Attachments"
+msgstr ""
+
+msgid "Verify another document"
+msgstr ""
+
+msgid "Waiting for the security check…"
 msgstr ""

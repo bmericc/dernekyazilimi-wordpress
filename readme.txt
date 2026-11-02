@@ -4,7 +4,7 @@ Tags: donation, membership, volunteer, association, nonprofit
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.10
+Stable tag: 1.0.11
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -95,6 +95,10 @@ Yes. The portal keeps the frame's session in a partitioned cookie, and the donat
 No. They are entered on the payment provider's page shown in the frame.
 
 == Changelog ==
+
+= 1.0.11 =
+* Document verification has a new layout with a green shield, PDF open and download links.
+* Document verification uses the same human check as the donation form when the portal has it on.
 
 = 1.0.10 =
 * Document verification shows the letter, PDF attachments and original file downloads.

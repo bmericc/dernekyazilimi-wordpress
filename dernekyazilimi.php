@@ -6,8 +6,8 @@
  * Version:           1.0.12
  * Requires at least: 6.2
  * Requires PHP:      7.4
- * Author:            Linux Kullanıcıları Derneği
- * Author URI:        https://www.lkd.org.tr
+ * Author:            Dernek Yazılımı
+ * Author URI:        https://github.com/lkdtr/dernekyazilimi
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       dernekyazilimi

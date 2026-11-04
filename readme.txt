@@ -1,5 +1,5 @@
 === Dernek Yazılımı ===
-Contributors: lkdtr
+Contributors: bmericc
 Tags: donation, membership, volunteer, association, nonprofit
 Requires at least: 6.2
 Tested up to: 7.1

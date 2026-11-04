@@ -12,7 +12,7 @@ Donation, volunteer and membership forms for associations that run the open sour
 
 == Description ==
 
-[Dernek Yazılımı](https://github.com/lkdtr/dernekyazilimi) is an open source portal for associations (members, dues, donations, volunteers). This plugin puts the portal's public forms on your WordPress site:
+[Dernek Yazılımı](https://github.com/dernekyazilimi/dernekyazilimi) is an open source portal for associations (members, dues, donations, volunteers). This plugin puts the portal's public forms on your WordPress site:
 
 * **Donation** – the donor fills in the form on your site; the card payment page of your payment provider, or the bank accounts for a transfer, follow in a frame.
 * **Volunteer registration** – name, email and a mobile phone verified by SMS. The person sets a password from the email the portal sends; no password is typed on your site.
@@ -65,7 +65,7 @@ With each of these the visitor's IP address and browser name are passed on, so t
 
 After a form is submitted, the visitor's browser loads a page of the portal in a frame. For a card donation that frame shows the payment page of the payment provider configured in your portal (for example iyzico – [terms](https://www.iyzico.com/en/legal/terms-of-use), [privacy policy](https://www.iyzico.com/en/privacy-policy)); card details are entered there and never reach your WordPress site.
 
-Source of the plugin: https://github.com/lkdtr/dernekyazilimi-wordpress – source of the portal: https://github.com/lkdtr/dernekyazilimi
+Source of the plugin: https://github.com/dernekyazilimi/dernekyazilimi-wordpress – source of the portal: https://github.com/dernekyazilimi/dernekyazilimi
 
 == Installation ==
 

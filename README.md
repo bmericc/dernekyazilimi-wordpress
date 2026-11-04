@@ -1,6 +1,6 @@
 # Dernek Yazılımı – WordPress eklentisi
 
-[Dernek Yazılımı](https://github.com/lkdtr/dernekyazilimi) portalının bağış, gönüllü ve üyelik formlarını derneğin WordPress sitesine koyar. Formları sitenin kendi teması çizer; ödeme ve başvurunun devamı portalın sayfasında, site içindeki bir çerçevede sürer.
+[Dernek Yazılımı](https://github.com/dernekyazilimi/dernekyazilimi) portalının bağış, gönüllü ve üyelik formlarını derneğin WordPress sitesine koyar. Formları sitenin kendi teması çizer; ödeme ve başvurunun devamı portalın sayfasında, site içindeki bir çerçevede sürer.
 
 ## Ne yapar
 
@@ -75,7 +75,7 @@ Eklenti yalnız derneğin kendi portalına bağlanır. Hangi verinin ne zaman g�
   ```
 - WordPress.org'a göndermeden önce paketi [Plugin Check](https://wordpress.org/plugins/plugin-check/) ile denetleyin.
 
-Değişiklikler fork üzerinden, `lkdtr/dernekyazilimi-wordpress` deposuna PR ile gelir.
+Değişiklikler fork üzerinden, `dernekyazilimi/dernekyazilimi-wordpress` deposuna PR ile gelir.
 
 ## Lisans
 

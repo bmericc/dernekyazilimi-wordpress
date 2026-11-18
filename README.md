@@ -1,5 +1,14 @@
 # Dernek Yazılımı – WordPress eklentisi
 
+<p align="center">
+  <a href="https://github.com/dernekyazilimi/dernekyazilimi-wordpress/actions/workflows/tests.yml"><img src="https://github.com/dernekyazilimi/dernekyazilimi-wordpress/actions/workflows/tests.yml/badge.svg" alt="tests"></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/dernekyazilimi/dernekyazilimi-wordpress"><img src="https://api.scorecard.dev/projects/github.com/dernekyazilimi/dernekyazilimi-wordpress/badge" alt="OpenSSF Scorecard"></a>
+  <a href="https://github.com/dernekyazilimi/dernekyazilimi-wordpress/actions/workflows/tests.yml"><img src="https://img.shields.io/badge/PHP-7.4%20%7C%208.4%20tested-777BB4?logo=php&logoColor=white" alt="PHP 7.4 | 8.4 tested"></a>
+  <a href="https://wordpress.org"><img src="https://img.shields.io/badge/WordPress-6.2%2B-21759B?logo=wordpress&logoColor=white" alt="WordPress 6.2+"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-blue" alt="GPL-3.0"></a>
+  <a href="https://github.com/sponsors/bmericc"><img src="https://img.shields.io/badge/sponsor-%E2%9D%A4-ea4aaa?logo=githubsponsors" alt="Sponsor"></a>
+</p>
+
 [Dernek Yazılımı](https://github.com/dernekyazilimi/dernekyazilimi) portalının bağış, gönüllü ve üyelik formlarını derneğin WordPress sitesine koyar. Formları sitenin kendi teması çizer; ödeme ve başvurunun devamı portalın sayfasında, site içindeki bir çerçevede sürer.
 
 ## Ne yapar
@@ -66,14 +75,21 @@ Eklenti yalnız derneğin kendi portalına bağlanır. Hangi verinin ne zaman g�
 ## Geliştirme
 
 - Derleme adımı yok: düz PHP, JS ve CSS.
+- Testler PHPUnit ve WordPress'in test kitaplığıyla, [wp-env](https://www.npmjs.com/package/@wordpress/env) içinde (Docker gerekir) çalışır. Portal taklit edilir; testler ağa çıkmaz:
+  ```bash
+  composer install && npm install
+  npm run env:start
+  npm test
+  ```
+  Eklenti klasörünün adı `dernekyazilimi-wordpress` olmalıdır (`npm test` bu yolu kullanır). Her PR'da GitHub Actions aynı testleri çalıştırır.
 - Kaynak metinler İngilizcedir; Türkçe çeviri `languages/dernekyazilimi-tr_TR.po` dosyasındadır. Değişince derleyin:
   ```bash
   msgfmt -o languages/dernekyazilimi-tr_TR.mo languages/dernekyazilimi-tr_TR.po
   ```
 - Portal tarafı: `/api/site/*` uçları ve gömme modu (portal reposunda `App\Support\SiteApi`, `App\Support\Embed`).
-- Dağıtım paketi (`.gitattributes` pakete girmeyenleri ayıklar; paketteki klasör adı eklentinin slug'ı olmalıdır):
+- Dağıtım paketi (`.gitattributes` pakete girmeyenleri ayıklar; `.github` OpenSSF Scorecard workflow'ları görebilsin diye orada değil, komutta dışarıda bırakılır; paketteki klasör adı eklentinin slug'ı olmalıdır):
   ```bash
-  git archive --format=zip --prefix=dernekyazilimi/ -o dernekyazilimi.zip HEAD
+  git archive --format=zip --prefix=dernekyazilimi/ -o dernekyazilimi.zip HEAD -- . ':!.github'
   ```
 - WordPress.org'a göndermeden önce paketi [Plugin Check](https://wordpress.org/plugins/plugin-check/) ile denetleyin.
 
@@ -81,4 +97,4 @@ Değişiklikler fork üzerinden, `dernekyazilimi/dernekyazilimi-wordpress` depos
 
 ## Lisans
 
-GPL-2.0-or-later
+[GNU General Public License v3.0 veya sonrası](LICENSE) (GPL-3.0-or-later) ile lisanslanmıştır. 1.0.12 ve önceki sürümler GPL-2.0-or-later ile yayınlanmıştı.

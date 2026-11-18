@@ -1,7 +1,6 @@
 .gitignore export-ignore
 .gitattributes export-ignore
 README.md export-ignore
-.github export-ignore
 .wp-env.json export-ignore
 build-zip.sh export-ignore
 composer.json export-ignore

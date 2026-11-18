@@ -4,9 +4,9 @@ Tags: donation, membership, volunteer, association, nonprofit
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.12
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Stable tag: 1.0.13
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Donation, volunteer and membership forms for associations that run the open source Dernek Yazılımı portal.
 
@@ -101,6 +101,9 @@ Yes. The portal keeps the frame's session in a partitioned cookie, and the donat
 No. They are entered on the payment provider's page shown in the frame.
 
 == Changelog ==
+
+= 1.0.13 =
+* The plugin is now licensed under the GPL-3.0-or-later (earlier versions stay GPL-2.0-or-later). The full licence text is in the LICENSE file.
 
 = 1.0.12 =
 * Document verification asks for the letter's number with the code; QR links still need the code only.
